@@ -67,6 +67,7 @@
     "babel-register": "^6.18.0",
     "chai": "^3.5.0",
     "mocha": "^3.1.2",
+    "react-addons-test-utils": "^15.4.2",
     "supertest": "^2.0.1",
     "supertest-as-promised": "^4.0.1",
     "volleyball": "^1.4.1",
