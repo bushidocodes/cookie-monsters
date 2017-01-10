@@ -13,8 +13,12 @@ const Review = db.define('reviews', {
 		type: Sequelize.TEXT
 	},
 	rating: {
-		type: Sequelize.ENUM('1 Star', '2 Stars', '3 Stars', '4 Stars', '5 Stars'),
-		allowNull: false
+		type: Sequelize.INTEGER,
+		allowNull: false,
+		validate: {
+			min: 1,
+			max: 5
+		}
 	},
 	photo: {
 		type: Sequelize.STRING,
