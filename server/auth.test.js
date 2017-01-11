@@ -1,10 +1,11 @@
 const request = require('supertest-as-promised')
 const {expect} = require('chai')
-const db = require('APP/db')
-const User = require('APP/db/models/user')
+const db = require('../db')
+const User = require('../db/models/user')
 const app = require('./start')
 
 const alice = {
+  name: 'Alice Malice',
   username: 'alice@secrets.org',
   password: '12345'
 }
@@ -14,7 +15,8 @@ describe('/api/auth', () => {
     db.didSync
       .then(() =>
         User.create(
-          {email: alice.username,
+          {name: alice.name,
+            email: alice.username,
           password: alice.password
         })
       )

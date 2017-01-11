@@ -1,6 +1,6 @@
 'use strict'
 
-const db = require('APP/db')
+const db = require('../db')
 const Product = require('../db/models/product')
 
 module.exports = require('express').Router()

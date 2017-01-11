@@ -1,4 +1,4 @@
-const db = require('APP/db');
+const db = require('../db');
 const Review = require('../db/models/review');
 
 module.exports = require('express').Router()

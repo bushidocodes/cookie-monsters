@@ -7,11 +7,13 @@
     "node": ">=6.7.0"
   },
   "scripts": {
-    "test": "check-node-version --node '>= 6.7.0' && bin/setup && mocha --compilers js:babel-register app/**/*.test.js app/**/*.test.jsx db/**/*.test.js server/**/*.test.js",
-    "test-watch": "check-node-version --node '>= 6.7.0' && bin/setup && mocha --compilers js:babel-register --watch app/**/*.test.js app/**/*.test.jsx db/**/*.test.js server/**/*.test.js",
-    "build": "check-node-version --node '>= 6.7.0' && bin/setup && webpack",
-    "build-watch": "check-node-version --node '>= 6.7.0' && bin/setup && webpack -w",
-    "start": "check-node-version --node '>= 6.7.0' && bin/setup && nodemon server/start.js",
+    "test": "check-node-version --node '>= 6.7.0' && mocha --compilers js:babel-register app/**/*.test.js app/**/*.test.jsx db/**/*.test.js server/**/*.test.js",
+    "test-watch": "check-node-version --node '>= 6.7.0' && mocha --compilers js:babel-register --watch app/**/*.test.js app/**/*.test.jsx db/**/*.test.js server/**/*.test.js",
+    "build": "check-node-version --node '>= 6.7.0' && webpack",
+    "build-watch": "check-node-version --node '>= 6.7.0' && webpack -w",
+    "start[dev]": "check-node-version --node '>= 6.7.0' && nodemon server/start.js",
+    "start[prod]": "check-node-version --node '>= 6.7.0' && node server/start.js",
+    "start": "check-node-version --node '>= 6.7.0' && bin/conditionalStart.sh",
     "seed": "node db/seed.js"
   },
   "repository": {
