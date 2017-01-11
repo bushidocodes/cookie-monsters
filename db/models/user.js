@@ -4,6 +4,10 @@ const bcrypt = require('bcrypt');
 const Sequelize = require('sequelize');
 const db = require('APP/db');
 
+const Review = require('./review');
+// const Order = require('./order');
+
+
 const User = db.define('users', {
   name: {
     type: Sequelize.STRING,
@@ -69,5 +73,8 @@ function setEmailAndPassword(user) {
     })
   );
 }
+
+User.hasMany(Review);
+// User.hasMany(Order);
 
 module.exports = User;

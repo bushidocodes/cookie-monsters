@@ -1,8 +1,9 @@
-'use strict'
+'use strict';
 
-const bcrypt = require('bcrypt')
-const Sequelize = require('sequelize')
-const db = require('APP/db')
+const bcrypt = require('bcrypt');
+const Sequelize = require('sequelize');
+const db = require('APP/db');
+const Product = require('./product');
 
 const Category = db.define('categories', {
   name: {
@@ -12,6 +13,6 @@ const Category = db.define('categories', {
       notEmpty: true
     }
   }
-})
+});
 
-module.exports = Category
+module.exports = Category;

@@ -1,8 +1,9 @@
-'use strict'
+'use strict';
 
-const bcrypt = require('bcrypt')
-const Sequelize = require('sequelize')
-const db = require('APP/db')
+const bcrypt = require('bcrypt');
+const Sequelize = require('sequelize');
+const db = require('APP/db');
+const Category = require('./category');
 
 const Product = db.define('products', {
   name: {
@@ -34,6 +35,8 @@ const Product = db.define('products', {
     }
   },
   photo: Sequelize.STRING
-})
+});
 
-module.exports = Product
+Product.belongsToMany(Category, { through: 'productCategories' });
+
+module.exports = Product;
