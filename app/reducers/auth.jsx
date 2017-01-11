@@ -20,6 +20,13 @@ export const login = (username, password) =>
       .then(() => dispatch(whoami()))
       .catch(() => dispatch(whoami()))      
 
+export const signup = (username, password) =>
+  dispatch =>
+    axios.post('/api/auth/local/signup',
+      {username, password})
+      .then(() => dispatch(whoami()))
+      .catch(() => dispatch(whoami()))      
+
 export const logout = () =>
   dispatch =>
     axios.post('/api/auth/logout')
