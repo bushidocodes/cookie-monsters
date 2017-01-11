@@ -2,7 +2,7 @@
 
 const bcrypt = require('bcrypt');
 const Sequelize = require('sequelize');
-const db = require('APP/db');
+const db = require('../../db');
 
 const Review = require('./review');
 // const Order = require('./order');

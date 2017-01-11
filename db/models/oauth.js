@@ -2,7 +2,7 @@
 
 const debug = require('debug')('oauth')
 const Sequelize = require('sequelize')
-const db = require('APP/db')
+const db = require('../../db')
 
 const OAuth = db.define('oauths', {
   uid: Sequelize.STRING,
@@ -15,7 +15,7 @@ const OAuth = db.define('oauths', {
   // OAuth v1 fields
   token: Sequelize.STRING,
   tokenSecret: Sequelize.STRING,
-  
+
   // The whole profile as JSON
   profileJson: Sequelize.JSON,
 }, {
@@ -42,7 +42,7 @@ OAuth.V2 = (accessToken, refreshToken, profile, done) =>
     })
     .then(({ oauth, user }) => user ||
       User.create({
-        name: profile.displayName,        
+        name: profile.displayName,
       }).then(user => db.Promise.props({
         user,
         _setOauthUser: oauth.setUser(user)
@@ -58,8 +58,8 @@ OAuth.setupStrategy =
   strategy,
   config,
   oauth=OAuth.V2,
-  passport 
-}) => {      
+  passport
+}) => {
   const undefinedKeys = Object.keys(config)
         .map(k => config[k])
         .filter(value => typeof value === 'undefined')
