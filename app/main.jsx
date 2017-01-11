@@ -18,7 +18,7 @@ const ExampleApp = connect(
       <nav>
         <Signup/>
         {user ? <WhoAmI/> : <Login/>}
-      </nav> 
+      </nav>
       {children}
     </div>
 )
