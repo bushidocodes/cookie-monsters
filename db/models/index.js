@@ -5,5 +5,8 @@
 // to get access to the User model.
 
 const User = require('./user');
+const Product = require('./product');
+const Order = require('./order');
+const OrderLineItem = require('./orderLineItem');
 
 module.exports = {User};
