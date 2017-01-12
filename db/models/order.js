@@ -40,7 +40,7 @@ const Order = db.define('orders', {
             products.forEach(
               product => runningTotal += product.orderLineItems.subtotal
             )
-            runningTotal += this.shippingRate
+            runningTotal += parseFloat(this.shippingRate)
             console.log(runningTotal);
             return runningTotal;
           })
