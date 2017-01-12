@@ -1,12 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
+import {Link} from 'react-router';
 
-export default class Products extends Component {
+export default function (props) {
 
-  render() {
-    return (
+  const products = props.products;
+  console.log('products', products);
+
+  return (
+    <div>
+      <h1>Cookies</h1>
       <div>
-        <h1>Cookies</h1>
+
       </div>
-    )
-  }
-}
+    </div>
+  );
+};
