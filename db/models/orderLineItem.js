@@ -15,7 +15,7 @@ const db = require('../../db');
 //   price: selectedProduct.price
 // })
 
-const OrderLineItem = db.define('orderlineitems', {
+const OrderLineItem = db.define('orderLineItems', {
   quantity: {
     type: Sequelize.INTEGER,
     allowNull: false,

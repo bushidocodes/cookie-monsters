@@ -31,19 +31,19 @@ const Order = db.define('orders', {
     allowNull: true
   }
 }
-, {
+  , {
     getterMethods: {
-      // TODO: fix total so that it actually generates a working total.
       total: function () {
         let runningTotal = 0.00;
-        // let myLineItems = this.getOrderLineItems();
-        // this.getProducts()
-        // .then((items)=> console.log(items));
-        // myLineItems.forEach((lineItem) => {
-          // runningTotal += lineItem.subtotal;
-        // });
-        runningTotal += this.shippingRate;
-        return runningTotal;
+        return this.getProducts()
+          .then(products => {
+            products.forEach(
+              product => runningTotal += product.orderLineItems.subtotal
+            )
+            runningTotal += this.shippingRate
+            console.log(runningTotal);
+            return runningTotal;
+          })
       }
     }
   }
