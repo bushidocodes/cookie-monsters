@@ -18,6 +18,15 @@ const seedProducts = () => db.Promise.map([
   {name: 'Black & White Cookie', description: 'The race relations cookie made famous by Jerry Seinfeld.', price: '1.50', quantity: 250, photo: 'images/cookies/black-white.jpg'},
 ], product => db.model('products').create(product))
 
+const seedCategories = () => db.Promise.map([
+  {name: 'festive'},
+  {name: 'chocolate'},
+  {name: 'no chocolate'},
+  {name: 'caramel'},
+  {name: 'white chocolate chip'},
+  {name: 'nuts'},
+  {name: 'nut free'}
+], category => db.model('categories').create(category))
 
 db.didSync
   .then(() => db.sync({force: true}))
@@ -25,5 +34,7 @@ db.didSync
   .then(users => console.log(`Seeded ${users.length} users OK`))
   .then(seedProducts)
   .then(products => console.log(`Seeded ${products.length} products OK`))
+  .then(seedCategories)
+  .then(categories => console.log(`Seeded ${categories.length} categories OK`))
   .catch(error => console.error(error))
   .finally(() => db.close())
