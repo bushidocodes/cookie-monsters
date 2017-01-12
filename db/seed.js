@@ -8,7 +8,7 @@ const seedUsers = () => db.Promise.map([
 const seedProducts = () => db.Promise.map([
   {name: 'Chocolate Chip', description: 'The classic. Enjoy with a tall glass of cold milk.', price: '1.50', quantity: 250, photo: 'images/cookies/chocolate-chip.jpg'},
   {name: 'Chocolate Chip with Walnuts', description: 'The classic favorite but good for your brain. Healthy!', price: '1.50', quantity: 250, photo: 'images/cookies/chocolate-chip-walnut.jpg'},
-  {name: 'Oatmeal Raisin', description: 'Why would you order this? Really?.', price: '1.50', quantity: 250, photo: 'images/cookies/oatmeal-raisin.jpg'},
+  {name: 'Oatmeal Raisin', description: 'Why would you order this? Really?', price: '1.50', quantity: 250, photo: 'images/cookies/oatmeal-raisin.jpg'},
   {name: 'Oatmeal Chocolate Chip', description: 'This is an improvement on oatmeal raisin.', price: '1.50', quantity: 250, photo: 'images/cookies/oatmeal-choc-chip.jpg'},
   {name: 'Sugar Cookie with Frosting & Sprinkles', description: "It's festive and fun.", price: '1.50', quantity: 250, photo: 'images/cookies/sugar-cookie-frosting-sprinkles.jpg'},
   {name: 'Snickerdoodle', description: 'Sugar cookies with cinnamon. Enjoy with high tea.', price: '1.50', quantity: 250, photo: 'images/cookies/snickerdoodle.jpg'},
