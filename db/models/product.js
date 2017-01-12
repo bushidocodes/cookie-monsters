@@ -7,6 +7,7 @@ const Category = require('./category');
 
 const Product = db.define('products', {
   name: {
+    // OB/EPS: consider unique validator
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
@@ -25,6 +26,7 @@ const Product = db.define('products', {
     allowNull: false,
     validate: {
       notEmpty: true
+      // OB/EPS: consider min validator
     }
   },
   quantity: {
@@ -32,9 +34,11 @@ const Product = db.define('products', {
     allowNull: false,
     validate: {
       notEmpty: true
+      // OB/EPS: consider min validator
     }
   },
   photo: Sequelize.STRING
+  // OB/EPS: consider isUrl validator
 });
 
 Product.belongsToMany(Category, { through: 'productCategories' });

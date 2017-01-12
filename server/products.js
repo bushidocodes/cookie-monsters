@@ -18,11 +18,12 @@ module.exports = require('express').Router()
       .catch(next))
 
   // Get a single type of cookie by cookie id
+  // OB/EPS: consider router.param
   .get('/:id', (req, res, next) => {
     let idAsNumber = parseInt(req.params.id, 10);
     if (!isNaN(idAsNumber)) {
       Product.findById(idAsNumber)
-        .then((product) => res.json(product))
+        .then((product) => res.json(product)) // OB/EPS: what about not found?
         .catch(next)
     } else {
       res.sendStatus(400)
@@ -31,10 +32,11 @@ module.exports = require('express').Router()
 
   // Modify a cookie by id
   .put('/:id', (req, res, next) => {
+    // OB/EPS: is this necessary?
     let idAsNumber = parseInt(req.params.id, 10);
     if (isNaN(idAsNumber)) res.sendStatus(400)
     Product.findById(idAsNumber)
-      .then((product) => product.update(req.body))
+      .then((product) => product.update(req.body)) // OB/EPS: what about not found?
       .then((order) => res.status(200).json(order))
       .catch(next)
   })
@@ -44,7 +46,7 @@ module.exports = require('express').Router()
     let idAsNumber = parseInt(req.params.id, 10);
     if (isNaN(idAsNumber)) res.sendStatus(400)
     Product.findById(idAsNumber)
-      .then((product) => product.destroy())
+      .then((product) => product.destroy()) // OB/EPS: what about not found?
       .then(() => res.sendStatus(200))
       .catch(next)
   })
