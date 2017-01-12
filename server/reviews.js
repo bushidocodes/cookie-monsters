@@ -9,4 +9,8 @@ module.exports = require('express').Router()
   .post('/', (req, res, next) =>
     Review.create(req.body)
     .then(review => res.json(review))
-    .catch(next));
+    .catch(next))
+  .get('/:id', (req, res, next) =>
+    Review.findById(req.params.id)
+    .then(review => res.json(review))
+    .catch(next))
