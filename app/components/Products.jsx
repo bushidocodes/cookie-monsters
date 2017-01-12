@@ -13,10 +13,14 @@ export default function (props) {
     <div>
       <Login />
       <SignUp />
-      <h1>Cookie Monsters</h1>
-      <h3>Home of the world's greatest cookies</h3>
-      <div>
-        {products.map( (cookie, index) => <Product key={index} cookie={cookie} /> )}
+       <div className="container">
+        <h1>Cookie Monsters</h1>
+        <h3>Home of the world's greatest cookies</h3>
+        <div className="container">
+          <div className="row">
+            {products.map( (cookie, index) => <Product key={index} cookie={cookie} /> )}
+          </div>
+        </div>
       </div>
     </div>
   );

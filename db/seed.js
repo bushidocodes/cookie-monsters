@@ -12,7 +12,7 @@ const seedProducts = () => db.Promise.map([
   {name: 'Oatmeal Chocolate Chip', description: 'This is an improvement on oatmeal raisin.', price: '1.50', quantity: 250, photo: 'images/cookies/oatmeal-choc-chip.jpg'},
   {name: 'Sugar Cookie with Frosting & Sprinkles', description: "It's festive and fun.", price: '1.50', quantity: 250, photo: 'images/cookies/sugar-cookie-frosting-sprinkles.jpg'},
   {name: 'Snickerdoodle', description: 'Sugar cookies with cinnamon. Enjoy with high tea.', price: '1.50', quantity: 250, photo: 'images/cookies/snickerdoodle.jpg'},
-  {name: 'White Chocolate & Macadamia Nut', description: "Let's be clear: white chocolate is not really chocolate.", price: '1.50', quantity: 250, photo: 'white-choc-macadamia-nut.jpg'},
+  {name: 'White Chocolate & Macadamia Nut', description: "Let's be clear: white chocolate is not really chocolate.", price: '1.50', quantity: 250, photo: 'images/cookies/white-choc-macadamia-nut.jpg'},
   {name: 'Gingerbread', description: 'Great all year round!', price: '1.50', quantity: 250, photo: 'images/cookies/gingerbread-man.jpg'},
   {name: 'Salted Caramel Chocolate Chip Cookie', description: 'For the hipsters out there.', price: '1.50', quantity: 250, photo: 'images/cookies/salted-caramel-choc-chip.jpg'},
   {name: 'Black & White Cookie', description: 'The race relations cookie made famous by Jerry Seinfeld.', price: '1.50', quantity: 250, photo: 'images/cookies/black-white.jpg'},
