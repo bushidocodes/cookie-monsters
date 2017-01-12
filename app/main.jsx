@@ -12,6 +12,7 @@ import Products from './components/Products'
 import Login from './components/Login'
 import Signup from './components/SignUp'
 import WhoAmI from './components/WhoAmI'
+import AppContainer from './containers/AppContainer'
 
 const ExampleApp = connect(
   ({ auth }) => ({ user: auth })
@@ -29,17 +30,16 @@ const ExampleApp = connect(
 const onAppEnter = function () {
   axios.get('/api/products')
     .then(products => {
-      store.dispatch(receiveProducts(products));
+      store.dispatch(receiveProducts(products.data));
     });
 };
 
 render (
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route path="/" component={ExampleApp} onEnter={onAppEnter}>
-        <IndexRedirect to="/jokes" />
+      <Route path="/" component={AppContainer} onEnter={onAppEnter}>
+        <IndexRedirect to="/products" />
         <Route path="/products" component={Products} />
-        <Route path="/jokes" component={Jokes} />
       </Route>
     </Router>
   </Provider>,

@@ -1,16 +1,22 @@
 import React from 'react';
 import {Link} from 'react-router';
+import SignUp from './SignUp';
+import Login from './Login';
+import Product from './Product';
 
 export default function (props) {
 
   const products = props.products;
-  console.log('products', products);
 
   return (
-    <div>
-      <h1>Cookies</h1>
-      <div>
 
+    <div>
+      <Login />
+      <SignUp />
+      <h1>Cookie Monsters</h1>
+      <h3>Home of the world's greatest cookies</h3>
+      <div>
+        {products.map( (cookie, index) => <Product key={index} cookie={cookie} /> )}
       </div>
     </div>
   );

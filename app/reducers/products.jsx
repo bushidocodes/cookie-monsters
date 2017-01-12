@@ -1,11 +1,17 @@
 import axios from 'axios';
 
-const reducer = (state=null, action) => {
+const reducer = (state=[], action) => {
+
+  let newState = Object.assign({}, state);
+
   switch(action.type) {
-  case RECEIVE_PRODUCTS:
-    return action.products
+    case RECEIVE_PRODUCTS:
+      newState = action.products;
+      break;
+    default:
+      return state;
   }
-  return state
+  return newState
 }
 
 const RECEIVE_PRODUCTS = 'RECEIVE_PRODUCTS'
