@@ -13,7 +13,7 @@ describe('Review', () => {
   describe('Persistence to the db', () => {
     xit('Does not allow a title to be null', () =>
       Review.create({ title: null, body: 'oops!', rating: 3, photo: 'http://www.yahoo.com/donald_trump_golden_shower.jpg' })
-      
+      .then(result => console.log(result)));
 
     // it('', () =>
     //   Review.create({ name: 'dude', password: 'ok' })
