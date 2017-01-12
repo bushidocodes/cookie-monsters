@@ -15,8 +15,7 @@
     "start[prod]": "check-node-version --node '>= 6.7.0' && node server/start.js",
     "start": "check-node-version --node '>= 6.7.0' && npm run start[prod]",
     "seed": "node db/seed.js",
-    "postinstall": "npm run build && node db/seed.js",
-    "heroku-prebuild": "set NPM_CONFIG_PRODUCTION=false"
+    "postinstall": "npm run build && node db/seed.js"
   },
   "repository": {
     "type": "git",
