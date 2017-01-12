@@ -3,6 +3,7 @@
 const db = require('../db')
 const Order = require('../db/models/order')
 const Product = require('../db/models/product')
+const Promise = require('bluebird');
 
 module.exports = require('express').Router()
 
@@ -16,8 +17,30 @@ module.exports = require('express').Router()
 				}
 			}]
 		})
+			.then((orders) => orders.map(
+				({
+					orderID,
+					status,
+					shippingRate,
+					shippingCarrier,
+					trackingNumber,
+					created_at,
+					products,
+					total}) => Promise.props({
+						orderID,
+						status,
+						shippingRate,
+						shippingCarrier,
+						trackingNumber,
+						created_at,
+						products,
+						total
+					})))
+			.then(orders => Promise.all(orders))
 			.then(orders => res.json(orders))
-			.catch(next))
+			.catch(next)
+	)
+
 
 	// Create a new empty order without products
 	// The request body may contain status, shippingRate, shippingCarrier, or trackingNumber
@@ -39,7 +62,24 @@ module.exports = require('express').Router()
 						attributes: ['quantity', 'price']
 					}
 				}]
-			})
+			}).then(({
+				orderID,
+				status,
+				shippingRate,
+				shippingCarrier,
+				trackingNumber,
+				created_at,
+				products,
+				total}) => Promise.props({
+					orderID,
+					status,
+					shippingRate,
+					shippingCarrier,
+					trackingNumber,
+					created_at,
+					products,
+					total
+				}))
 				.then((order) => res.json(order))
 				.catch(next)
 		} else {
