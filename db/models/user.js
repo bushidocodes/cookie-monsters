@@ -74,7 +74,4 @@ function setEmailAndPassword(user) {
   );
 }
 
-User.hasMany(Review);
-// User.hasMany(Order);
-
 module.exports = User;
