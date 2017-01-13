@@ -1,6 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
+import {Link} from 'react-router';
 
 export default ({ cookie }) => (
   <div className="col-xs-18 col-sm-6 col-md-3">
@@ -11,6 +12,8 @@ export default ({ cookie }) => (
       <div className="caption">
         <h4>{cookie.name}</h4>
         <p>{cookie.description}</p>
+        <p className="cookieCategory">{cookie.categories.map ( category => category ).join(', ')}</p>
+        <p><Link to="#">Reviews</Link></p>
         <p><a href="#" className="btn btn-info btn-xs" role="button">Add to cart</a></p>
       </div>
     </div>

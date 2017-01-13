@@ -15,14 +15,16 @@ const seedProducts = () => db.Promise.map([
   {name: 'Oatmeal Chocolate Chip', description: 'This is an improvement on oatmeal raisin.', price: '1.50', quantity: 250, photo: 'images/cookies/oatmeal-choc-chip.jpg', categories: ['chocolate', 'classic', 'oatmeal']},
   {name: 'Sugar Cookie with Frosting & Sprinkles', description: "It's festive and fun.", price: '1.50', quantity: 250, photo: 'images/cookies/sugar-cookie-frosting-sprinkles.jpg', categories: ['sugar', 'classic', 'holiday']},
   {name: 'Snickerdoodle', description: 'Sugar cookies with cinnamon. Enjoy with high tea.', price: '1.50', quantity: 250, photo: 'images/cookies/snickerdoodle.jpg', categories: ['classic']},
-  {name: 'White Chocolate & Macadamia Nut', description: "Let's be clear: white chocolate is not really chocolate.", price: '1.50', quantity: 250, photo: 'white-choc-macadamia-nut.jpg', categories: ['white chocolate', 'nuts']},
+  {name: 'White Chocolate & Macadamia Nut', description: "Maximum sweetness.", price: '1.50', quantity: 250, photo: 'images/cookies/white-choc-macadamia-nut.jpg', categories: ['white chocolate', 'nuts']},
   {name: 'Gingerbread', description: 'Great all year round!', price: '1.50', quantity: 250, photo: 'images/cookies/gingerbread-man.jpg', categories: ['holiday', 'classic']},
   {name: 'Salted Caramel Chocolate Chip Cookie', description: 'For the hipsters out there.', price: '1.50', quantity: 250, photo: 'images/cookies/salted-caramel-choc-chip.jpg', categories: ['hipster', 'caramel', 'chocolate']},
   {name: 'Black & White Cookie', description: 'The race relations cookie made famous by Jerry Seinfeld.', price: '1.50', quantity: 250, photo: 'images/cookies/black-white.jpg', categories: ['classic']}
 ], product => db.model('products').create(product))
 
 const seedReviews = () => db.Promise.map([
-  {title: 'Gross!', body: 'Will never order these again. Disgusting. Ruined the party.', rating: 1, user_id: 3, product_id: 3}
+  {title: 'Gross!', body: 'Will never order these again. Disgusting. Ruined the party.', rating: 1, user_id: 3, product_id: 4},
+  {title: 'Delicious!', body: 'Will order these constantly. Getting fat.', rating: 5, user_id: 3, product_id: 1},
+  {title: 'Meh', body: 'Not the worst.', rating: 3, user_id: 3, product_id: 9},
 ], review => db.model('reviews').create(review))
 
 db.didSync
