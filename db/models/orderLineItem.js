@@ -39,8 +39,5 @@ const OrderLineItem = db.define('orderLineItems', {
   }
 )
 
-Order.belongsToMany(Product, { through: OrderLineItem });
-Product.belongsToMany(Order, { through: OrderLineItem });
-
 
 module.exports = OrderLineItem

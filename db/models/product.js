@@ -37,6 +37,4 @@ const Product = db.define('products', {
   photo: Sequelize.STRING
 });
 
-Product.belongsToMany(Category, { through: 'productCategories' });
-
 module.exports = Product;
