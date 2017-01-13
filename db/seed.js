@@ -18,7 +18,7 @@ const seedProducts = () => db.Promise.map([
   {name: 'White Chocolate & Macadamia Nut', description: "Let's be clear: white chocolate is not really chocolate.", price: '1.50', quantity: 250, photo: 'white-choc-macadamia-nut.jpg', categories: ['white chocolate', 'nuts']},
   {name: 'Gingerbread', description: 'Great all year round!', price: '1.50', quantity: 250, photo: 'images/cookies/gingerbread-man.jpg', categories: ['holiday', 'classic']},
   {name: 'Salted Caramel Chocolate Chip Cookie', description: 'For the hipsters out there.', price: '1.50', quantity: 250, photo: 'images/cookies/salted-caramel-choc-chip.jpg', categories: ['hipster', 'caramel', 'chocolate']},
-  {name: 'Black & White Cookie', description: 'The race relations cookie made famous by Jerry Seinfeld.', price: '1.50', quantity: 250, photo: 'images/cookies/black-white.jpg', categories: ['classic']},
+  {name: 'Black & White Cookie', description: 'The race relations cookie made famous by Jerry Seinfeld.', price: '1.50', quantity: 250, photo: 'images/cookies/black-white.jpg', categories: ['classic']}
 ], product => db.model('products').create(product))
 
 const seedReviews = () => db.Promise.map([
