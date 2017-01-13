@@ -22,7 +22,7 @@ const seedProducts = () => db.Promise.map([
 ], product => db.model('products').create(product))
 
 const seedReviews = () => db.Promise.map([
-  {title: 'Gross!', body: 'Will never order these again. Disgusting. Ruined the party.', rating: 1, user_id: 3}
+  {title: 'Gross!', body: 'Will never order these again. Disgusting. Ruined the party.', rating: 1, user_id: 3, product_id: 3}
 ], review => db.model('reviews').create(review))
 
 db.didSync
