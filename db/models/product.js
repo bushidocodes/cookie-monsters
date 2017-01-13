@@ -3,7 +3,7 @@
 const bcrypt = require('bcrypt');
 const Sequelize = require('sequelize');
 const db = require('../../db');
-const Review = require('../../db');
+const Review = require('./review');
 
 const Product = db.define('products', {
   name: {
@@ -38,4 +38,5 @@ const Product = db.define('products', {
   categories: Sequelize.ARRAY(Sequelize.STRING)
 });
 
+Product.hasMany(Review);
 module.exports = Product;
