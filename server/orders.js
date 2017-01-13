@@ -108,11 +108,12 @@ module.exports = require('express').Router()
 			.catch(next))
 
 	// Add a single item to an order
+	// OB/EPS: consider POST /api/orders/:orderId/products (maybe more standard)
 	.post('/:orderId/products/:productId', (req, res, next) =>
 		Order.findById(parseInt(req.params.orderId, 10))
 			.then((order) => {
 				Product.findById(parseInt(req.params.productId, 10))
-					.then((product) => {
+					.then((product) => { // OB/EPS: nested .then (beware!)
 						order.addProduct(product, {
 							quantity: 1,
 							price: product.price
@@ -123,11 +124,12 @@ module.exports = require('express').Router()
 			.catch(next))
 
 	// Add several items to an order or update the item count in an order
+	// OB/EPS: could probably be rolled into previous route's logic
 	.post('/:orderId/products/:productId/quantity/:quantity', (req, res, next) =>
 		Order.findById(parseInt(req.params.orderId, 10))
 			.then((order) => {
 				Product.findById(parseInt(req.params.productId, 10))
-					.then((product) => {
+					.then((product) => { // OB/EPS: nested .then
 						order.addProduct(product, {
 							quantity: parseInt(req.params.quantity, 10),
 							price: product.price
@@ -142,7 +144,7 @@ module.exports = require('express').Router()
 		Order.findById(parseInt(req.params.orderId, 10))
 			.then((order) => {
 				Product.findById(parseInt(req.params.productId, 10))
-					.then((product) => {
+					.then((product) => { // OB/EPS: nested .then
 						product.destroy()
 					})
 			})

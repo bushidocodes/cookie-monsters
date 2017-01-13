@@ -4,6 +4,7 @@ const Sequelize = require('sequelize')
 const db = require('../../db')
 
 const Order = db.define('orders', {
+  // OB/EPS: seems unnecessary, could just use .id
   orderID: {
     type: Sequelize.INTEGER,
     allowNull: false,
@@ -33,6 +34,7 @@ const Order = db.define('orders', {
 }
   , {
     getterMethods: {
+      // OB/EPS: don't recommend using a getter method that returns a promise
       total: function () {
         let runningTotal = 0.00;
         return this.getProducts()

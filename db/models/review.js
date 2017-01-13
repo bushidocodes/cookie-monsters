@@ -8,6 +8,7 @@ const Review = db.define('reviews', {
 	title: {
 		type: Sequelize.STRING,
 		allowNull: false
+		// OB/EPS: consider not empty validator
 	},
 	body: {
 		type: Sequelize.TEXT

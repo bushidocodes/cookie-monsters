@@ -20,6 +20,7 @@ describe('Category', () => {
     testCategory = Category.build({
         name: 'chocolate'
       });
+    // OB/EPS: watch out for undead code
     // testCookie.addCategory(testCategory.id)
   })
 
