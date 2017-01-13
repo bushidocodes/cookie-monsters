@@ -28,6 +28,4 @@ const Review = db.define('reviews', {
 	}
 });
 
-
-
 module.exports = Review;
