@@ -3,45 +3,42 @@
 const db = require('../db')
 const Order = require('../db/models/order')
 const Product = require('../db/models/product')
+const User = require('../db/models/user')
 const Promise = require('bluebird');
+const {mustBeLoggedIn, forbidden} = require('./auth.filters');
 
 module.exports = require('express').Router()
 
 	// Retrieve all orders, including products and orderlineitem details
-	.get('/', (req, res, next) =>
-		Order.findAll({
-			include: [{
-				model: Product,
-				through: {
-					attributes: ['quantity', 'price']
-				}
-			}]
-		})
-			// TODO : Clean up this nightmare somehow
-			.then(orders => orders.map(
-				({
-					orderID,
-					status,
-					shippingRate,
-					shippingCarrier,
-					trackingNumber,
-					created_at,
-					products,
-					total}) => Promise.props({
-						orderID,
-						status,
-						shippingRate,
-						shippingCarrier,
-						trackingNumber,
-						created_at,
-						products,
-						total
-					})))
-			.then(orders => Promise.all(orders))
-			.then(orders => res.json(orders))
-			.catch(next)
-	)
-
+	.get('/', mustBeLoggedIn, (req, res, next) => {
+		if (req.user.isAdmin) {
+			return Order.findAll({
+				include: [{
+					model: Product,
+					through: {
+						attributes: ['quantity', 'price']
+					}
+				}]
+			})
+				.then(orders => _promisifyOrderProps(orders))
+				.then(orders => Promise.all(orders))
+				.then(orders => res.json(orders))
+				.catch(next)
+		} else {
+			req.user.getOrders({
+				include: [{
+					model: Product,
+					through: {
+						attributes: ['quantity', 'price']
+					}
+				}]
+			})
+				.then(orders => _promisifyOrderProps(orders))
+				.then(orders => Promise.all(orders))
+				.then(orders => res.status(200).json(orders))
+				.catch(next)
+		}
+	})
 
 	// Create a new empty order without products
 	// The request body may contain status, shippingRate, shippingCarrier, or trackingNumber
@@ -60,10 +57,20 @@ module.exports = require('express').Router()
 	// 	}
 	// }
 
-	.post('/', (req, res, next) =>
-		Order.create(req.body)
-			.then(order => res.json(order))
-			.catch(next))
+	.post('/', (req, res, next) => {
+		console.log('\tRunning POST /api/orders/');
+		if (req.user.isAdmin) {
+			Order.create(req.body)
+				.then(order => res.status(200).json(order))
+				.catch(next)
+		} else {
+			console.log('\tUser is not an Admin');
+			console.log('\treq.user.id is ', req.user.id);
+			req.user.createOrder(req.body)
+				.then(order => res.status(200).json(order))
+				.catch(next)
+		}
+	})
 
 	// This is just a starting point for pair programming with Eliot tomorrow
 	// .post('/', (req, res, next) =>
@@ -89,25 +96,7 @@ module.exports = require('express').Router()
 					attributes: ['quantity', 'price']
 				}
 			}]
-			// TODO : Clean up this nightmare somehow
-		}).then(({
-			orderID,
-			status,
-			shippingRate,
-			shippingCarrier,
-			trackingNumber,
-			created_at,
-			products,
-			total}) => Promise.props({
-				orderID,
-				status,
-				shippingRate,
-				shippingCarrier,
-				trackingNumber,
-				created_at,
-				products,
-				total
-			}))
+		}).then(orders => _promisifyOrderProps(orders))
 			.then(order => res.json(order))
 			.catch(next)
 	})
@@ -165,3 +154,28 @@ module.exports = require('express').Router()
 			.then(res.sendStatus(200))
 			.catch(next)
 	})
+
+// This is a kludgey looking helper function to deal with resolving a Promise
+// returned by a Sequelize getter
+// TODO : Clean up this nightmare somehow
+function _promisifyOrderProps(orders) {
+	return orders.map(
+		({
+			orderID,
+			status,
+			shippingRate,
+			shippingCarrier,
+			trackingNumber,
+			created_at,
+			products,
+			total}) => Promise.props({
+				orderID,
+				status,
+				shippingRate,
+				shippingCarrier,
+				trackingNumber,
+				created_at,
+				products,
+				total
+			}))
+}
