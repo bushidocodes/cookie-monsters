@@ -9,6 +9,7 @@ import axios from 'axios';
 import store from './store'
 import Jokes from './components/Jokes'
 import Products from './components/Products'
+import Order from './components/Order'
 import Login from './components/Login'
 import Signup from './components/SignUp'
 import WhoAmI from './components/WhoAmI'
@@ -38,9 +39,10 @@ render (
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={AppContainer} onEnter={onAppEnter}>
-        <IndexRedirect to="/products" />
         <Route path="/products" component={Products} />
+        <IndexRedirect to="/products" />
       </Route>
+      <Route path="/order" component={Order} />
     </Router>
   </Provider>,
   document.getElementById('main')

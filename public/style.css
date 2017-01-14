@@ -28,6 +28,14 @@ a:hover {
   }
 }
 
+#cartPreviewIcon {
+  font-size: 20px;
+}
+
+#cartPreviewText {
+  font-size: 16px;
+}
+
 /*Product Grid*/
 
 .cookieContainer {
@@ -45,6 +53,15 @@ a:hover {
 
 .thumbnail {
   height: 500px;
+}
+
+.quantity {
+  width: 50px !important;
+  display: inline-block !important;
+}
+
+#quantityText {
+  font-size:16px;
 }
 
 /*Nav*/
@@ -101,4 +118,18 @@ body {
 
 .container .text-muted {
   margin: 20px 0;
+}
+
+/*Order*/
+
+#orderDetail {
+  margin-top: 35px;
+}
+
+.orderTableFooterTitles {
+  font-weight: 600;
+}
+
+#shippingCarrier {
+  font-weight: 600;
 }
