@@ -1,7 +1,5 @@
 import React from 'react'
 
-// Fails Codeship test if I add the class btn-primary to the submit button. Why?
-
 export const Login = ({ login }) => (
   <form onSubmit={evt => {
     evt.preventDefault()
@@ -9,7 +7,7 @@ export const Login = ({ login }) => (
   } }>
     <input className="authFormField" name="username" />
     <input className="authFormField" name="password" type="password" />
-    <input className="btn" type="submit" value="Login" />
+    <input className={"btn" + " " + "btn-primary"} type="submit" value="Login" />
   </form>
 )
 
