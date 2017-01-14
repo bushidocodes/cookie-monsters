@@ -2,6 +2,7 @@ import React from 'react';
 import SignUp from './SignUp';
 import Login from './Login';
 import Product from './Product';
+import Footer from './Footer';
 
 export default function (props) {
 
@@ -12,7 +13,7 @@ export default function (props) {
     <div>
       <Login />
       <SignUp />
-       <div className="container">
+      <div className="container">
         <img className="cookieMonsterImg" src='/images/cookie-monster.jpg' />
         <h1>Cookie Monsters</h1>
         <h3 className="subtitle">Home of the world's greatest cookies</h3>
@@ -22,6 +23,7 @@ export default function (props) {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
