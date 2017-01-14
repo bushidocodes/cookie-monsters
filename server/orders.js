@@ -18,7 +18,7 @@ module.exports = require('express').Router()
 			}]
 		})
 			// TODO : Clean up this nightmare somehow
-			.then((orders) => orders.map(
+			.then(orders => orders.map(
 				({
 					orderID,
 					status,
@@ -79,19 +79,34 @@ module.exports = require('express').Router()
 	// 		.then(order => res.json(order))
 	// 		.catch(next))
 
+	// Use Param to DRY subsequent routes
+	.param('orderId', function (req, res, next) {
+		Order.findById(req.params.orderId)
+			.then(product => {
+				req.product
+				next();
+			})
+	})
+
 	// Retrieve a single order, including products and orderlineitem details
 	.get('/:orderId', (req, res, next) => {
-		let idAsNumber = parseInt(req.params.orderId, 10);
-		if (!isNaN(idAsNumber)) {
-			Order.findById(idAsNumber, {
-				include: [{
-					model: Product,
-					through: {
-						attributes: ['quantity', 'price']
-					}
-				}]
-				// TODO : Clean up this nightmare somehow
-			}).then(({
+		Order.findById(req.params.orderId, {
+			include: [{
+				model: Product,
+				through: {
+					attributes: ['quantity', 'price']
+				}
+			}]
+			// TODO : Clean up this nightmare somehow
+		}).then(({
+			orderID,
+			status,
+			shippingRate,
+			shippingCarrier,
+			trackingNumber,
+			created_at,
+			products,
+			total}) => Promise.props({
 				orderID,
 				status,
 				shippingRate,
@@ -99,39 +114,25 @@ module.exports = require('express').Router()
 				trackingNumber,
 				created_at,
 				products,
-				total}) => Promise.props({
-					orderID,
-					status,
-					shippingRate,
-					shippingCarrier,
-					trackingNumber,
-					created_at,
-					products,
-					total
-				}))
-				.then((order) => res.json(order))
-				.catch(next)
-		} else {
-			res.sendStatus(400)
-		}
+				total
+			}))
+			.then(order => res.json(order))
+			.catch(next)
 	})
 
 	// Update an order
-	// {"orderLineItems": {
-	// 	"2": {"quantity": 10},
-	//  	"10": {"quantity": 2}
-	// }}
+
 	.put('/:orderId', (req, res, next) => {
 		Order.findById(req.params.orderId)
-			.then((order) => order.update(req.body))
-			.then((order) => res.status(200).json(order))
+			.then(order => order.update(req.body))
+			.then(order => res.status(200).json(order))
 			.catch(next)
 	})
 
 	// Delete an order
 	.delete('/:orderId/', (req, res, next) =>
 		Order.findById(parseInt(req.params.orderId, 10))
-			.then((order) => order.destroy())
+			.then(order => order.destroy())
 			.then(res.sendStatus(200))
 			.catch(next))
 
@@ -148,12 +149,12 @@ module.exports = require('express').Router()
 		let orderLineItems = req.body.orderLineItems;
 		let productIds = Object.keys(orderLineItems);
 		let order;
-		Order.findById(parseInt(req.params.orderId, 10))
-			.then((_order) => {
+		Order.findById(req.params.orderId)
+			.then(_order => {
 				order = _order;
-				return Promise.all(productIds.map((productId) => Product.findById(productId)))
+				return Promise.all(productIds.map(productId => Product.findById(productId)))
 			})
-			.then((products) => {
+			.then(products => {
 				products.forEach((product) =>
 					order.addProduct(product, {
 						quantity: orderLineItems[product.id].quantity,
@@ -168,9 +169,7 @@ module.exports = require('express').Router()
 	// Remove an item from an order
 	.delete('/:orderId/products/:productId', (req, res, next) => {
 		Order.findById(req.params.orderId)
-			.then((order) => {
-				return order.removeProduct(req.params.productId);
-			})
+			.then(order => order.removeProduct(req.params.productId))
 			.then(res.sendStatus(200))
 			.catch(next)
 	})
