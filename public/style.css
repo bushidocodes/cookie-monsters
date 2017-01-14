@@ -1,8 +1,27 @@
+/*Landing Page*/
+
+.subtitle {
+  margin-top: 0;
+}
+
+.cookieMonsterImg {
+  float: left;
+  height: 100px;
+}
+
 .cookieContainer {
   height: 300px;
   overflow: hidden;
 }
 
 .cookieImage {
-  width: 100%;
+  max-width: 515px;
+}
+
+.cookieCategory {
+  font-style: italic;
+}
+
+.thumbnail {
+  height: 500px;
 }
