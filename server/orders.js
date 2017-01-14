@@ -122,15 +122,10 @@ module.exports = require('express').Router()
 	//  	"10": {"quantity": 2}
 	// }}
 	.put('/:orderId', (req, res, next) => {
-		let idAsNumber = parseInt(req.params.orderId, 10);
-		if (!isNaN(idAsNumber)) {
-			Order.findById(idAsNumber)
-				.then((order) => order.update(req.body))
-				.then((order) => res.status(200).json(order))
-				.catch(next)
-		} else {
-			res.sendStatus(400)
-		}
+		Order.findById(req.params.orderId)
+			.then((order) => order.update(req.body))
+			.then((order) => res.status(200).json(order))
+			.catch(next)
 	})
 
 	// Delete an order
@@ -172,14 +167,9 @@ module.exports = require('express').Router()
 
 	// Remove an item from an order
 	.delete('/:orderId/products/:productId', (req, res, next) => {
-		// let order;
-		Order.findById(parseInt(req.params.orderId, 10))
+		Order.findById(req.params.orderId)
 			.then((order) => {
-				// order = _order;
-				return order.getProduct(req.params.productId);
-			})
-			.then((product) => {
-				product.destroy()
+				return order.removeProduct(req.params.productId);
 			})
 			.then(res.sendStatus(200))
 			.catch(next)
