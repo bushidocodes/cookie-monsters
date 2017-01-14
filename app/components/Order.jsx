@@ -31,6 +31,13 @@ export default () => (
             <td className="pull-right orderTableFooterTitles">Total</td>
             <td>$21.95</td>
           </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>
+              <button className="btn btn-primary">Place Order</button>
+            </td>
+          </tr>
         </tfoot>
         <tbody>
           {/* Need to make a loop for table rows */}
@@ -41,8 +48,12 @@ export default () => (
           </tr>
         </tbody>
       </table>
+    {/* This should appear after order is submitted */}
       <div className="lead">
         Products shipped by <span id="shippingCarrier">USPS</span>. Receipt and tracking number emailed to you shortly.
+      </div>
+      <div>
+        <Link to="/products">Return to main page</Link>
       </div>
     </div>
   </div>
