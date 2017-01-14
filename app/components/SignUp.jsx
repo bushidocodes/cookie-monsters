@@ -7,7 +7,7 @@ export const Signup = ({ signup }) => (
   } }>
     <input className="authFormField" name="username" placeholder="Username" />
     <input className="authFormField" name="password" type="password" placeholder="Password" />
-    <input className={"btn" + " " + "btn-primary"} type="submit" value="Sign Up" />
+    <input className="btn btn-primary" type="submit" value="Sign Up" />
   </form>
 )
 
