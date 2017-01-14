@@ -1,7 +1,6 @@
 import React from 'react';
-import SignUp from './SignUp';
-import Login from './Login';
 import Product from './Product';
+import Nav from './Nav';
 import Footer from './Footer';
 
 export default function (props) {
@@ -11,8 +10,7 @@ export default function (props) {
   return (
 
     <div>
-      <Login />
-      <SignUp />
+      <Nav />
       <div className="container">
         <img className="cookieMonsterImg" src='/images/cookie-monster.jpg' />
         <h1>Cookie Monsters</h1>
