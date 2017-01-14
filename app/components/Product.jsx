@@ -13,7 +13,7 @@ export default ({ cookie }) => (
         <h4>{cookie.name}</h4>
         <p>{cookie.description}</p>
         <p className="cookieCategory">{cookie.categories.map ( category => category ).join(', ')}</p>
-        <p><Link to="#">Reviews</Link></p>
+        <p><Link to="/reviews">Reviews</Link></p>
         <p><span id="quantityText">Quantity: </span><input className="form-control quantity" name="quantity" placeholder="12" /> <a href="#" className="btn btn-info btn-sm" role="button">Add to cart</a></p>
       </div>
     </div>
