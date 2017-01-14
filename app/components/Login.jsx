@@ -7,7 +7,7 @@ export const Login = ({ login }) => (
   } }>
     <input className="authFormField" name="username" />
     <input className="authFormField" name="password" type="password" />
-    <input className="btn" type="submit" value="Login" />
+    <input className={"btn" + " " + "btn-primary"} type="submit" value="Login" />
   </form>
 )
 
