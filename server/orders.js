@@ -79,14 +79,6 @@ module.exports = require('express').Router()
 	// 		.then(order => res.json(order))
 	// 		.catch(next))
 
-	// Use Param to DRY subsequent routes
-	.param('orderId', function (req, res, next) {
-		Order.findById(req.params.orderId)
-			.then(product => {
-				req.product
-				next();
-			})
-	})
 
 	// Retrieve a single order, including products and orderlineitem details
 	.get('/:orderId', (req, res, next) => {
