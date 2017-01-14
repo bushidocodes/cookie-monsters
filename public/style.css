@@ -1,5 +1,10 @@
+a:hover {
+  text-decoration: none !important;
+}
+
 /*Landing Page*/
 
+/*Header*/
 .subtitle {
   margin-top: 0;
 }
@@ -8,6 +13,22 @@
   float: left;
   height: 100px;
 }
+
+/*Cart Preview*/
+
+@media only screen and (min-width: 768px) {
+  #headerRow {
+    position: relative;
+  }
+
+  #cartRow {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+}
+
+/*Product Grid*/
 
 .cookieContainer {
   height: 300px;
