@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import App from '../components/App';
+import Products from '../components/Products';
 
 function mapStateToProps(state) {
   return {
@@ -8,4 +8,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps)(Products);
