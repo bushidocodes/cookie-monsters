@@ -45,3 +45,12 @@ module.exports = require('express').Router()
 
 	.get('/:id', (req, res, next) =>
 		res.status(200).json(req.user))
+
+	// TODO: Implement put
+	// .put('/:id', (req, res, next) =>
+	// 	res.status(200).json(req.user))
+
+	// TODO: Implement delete
+	// .delete('/:id', (req, res, next) =>
+	// 	res.status(200).json(req.user))
+
