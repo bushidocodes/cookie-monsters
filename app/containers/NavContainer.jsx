@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Nav from '../components/Nav';
 import { logout } from '../reducers/auth';
+import {browserHistory} from 'react-router';
 
 function mapStateToProps(state) {
   return {
@@ -9,10 +10,13 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps() {
+function mapDispatchToProps(dispatch) {
   return {
-    logout: logout
-  };
+    logout: () => {
+      dispatch(logout())
+      browserHistory.push('/');
+    }
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Nav);
