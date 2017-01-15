@@ -1,16 +1,16 @@
 'use strict'
 import React from 'react'
-import {Router, Route, IndexRedirect, browserHistory} from 'react-router';
-import {render} from 'react-dom';
-import {connect, Provider} from 'react-redux';
-import {receiveProducts} from './reducers/products';
+import { Router, Route, IndexRedirect, browserHistory } from 'react-router';
+import { render } from 'react-dom';
+import { connect, Provider } from 'react-redux';
+import { receiveProducts } from './reducers/products';
 import axios from 'axios';
 import store from './store';
 
 import AppContainer from './containers/AppContainer';
 import Cart from './components/Cart';
 import Footer from './components/Footer';
-import Login from './components/Login';
+import LoginContainer from './containers/LoginContainer';
 import SignUp from './components/SignUp';
 import Nav from './components/Nav';
 import Order from './components/Order';
@@ -44,15 +44,15 @@ const onAppEnter = function () {
     });
 };
 
-render (
-  <Provider store={ store }>
-    <Router history={ browserHistory }>
-      <Route path="/" component={ AppContainer } onEnter={ onAppEnter }>
-        <Route path="/products" component={ ProductsContainer } />
-        <Route path="/order" component={ Order } />
-        <Route path="/reviews" component={ Reviews } />
+render(
+  <Provider store={store}>
+    <Router history={browserHistory}>
+      <Route path="/" component={AppContainer} onEnter={onAppEnter}>
+        <Route path="/products" component={ProductsContainer} />
+        <Route path="/order" component={Order} />
+        <Route path="/reviews" component={Reviews} />
         <Route path="/signup" component={SignUp} />
-        <Route path="/login" component={Login} />
+        <Route path="/login" component={LoginContainer} />
         <IndexRedirect to="/products" />
       </Route>
     </Router>
