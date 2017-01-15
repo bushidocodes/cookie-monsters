@@ -12,7 +12,7 @@ import Products from './components/Products'
 import Order from './components/Order'
 import Reviews from './components/Reviews'
 import Login from './components/Login'
-import Signup from './components/SignUp'
+import SignUp from './components/SignUp'
 import WhoAmI from './components/WhoAmI'
 import AppContainer from './containers/AppContainer'
 
@@ -45,6 +45,8 @@ render (
       </Route>
       <Route path="/order" component={Order} />
       <Route path="/reviews" component={Reviews} />
+      <Route path="/signup" component={SignUp} />
+      <Route path="/login" component={Login} />
     </Router>
   </Provider>,
   document.getElementById('main')
