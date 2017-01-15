@@ -49,9 +49,9 @@ render (
       <Route path="/" component={ AppContainer } onEnter={ onAppEnter }>
         <Route path="/products" component={ ProductsContainer } />
         <IndexRedirect to="/products" />
+        <Route path="/order" component={ Order } />
+        <Route path="/reviews" component={ Reviews } />
       </Route>
-      <Route path="/order" component={ Order } />
-      <Route path="/reviews" component={ Reviews } />
     </Router>
   </Provider>,
   document.getElementById('main')
