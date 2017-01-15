@@ -5,13 +5,15 @@ const Product = require('../db/models/product')
 
 module.exports = require('express').Router()
 
-  // List all the cookies
+  // Action: List all the cookies
+  // Roles: Guest, User, Admin
   .get('/', (req, res, next) =>
     Product.findAll()
       .then(products => res.json(products))
       .catch(next))
 
-  // Create a new type of cookie
+  // Action: Create a new type of cookie
+  // Roles: Admin
   .post('/', (req, res, next) =>
     Product.create(req.body)
       .then(product => res.json(product))
@@ -31,19 +33,22 @@ module.exports = require('express').Router()
       .catch(next);
   })
 
-  // Get a single type of cookie by cookie id
+  // Action: List a single type of cookie by cookie id
+  // Roles: Guest, User, Admin
   .get('/:id', (req, res, next) => {
     res.status(200).json(req.product)
   })
 
-  // Modify a cookie by id
+  // Action: Modify a cookie by id
+  // Roles: Admin
   .put('/:id', (req, res, next) => {
     req.product.update(req.body)
       .then(order => res.status(200).json(order))
       .catch(next)
   })
 
-  // Delete a cookie by id. Oh NOOO!!!
+  // Action: Delete a cookie by id. Oh NOOO!!!
+  // Roles: Admin
   .delete('/:id', (req, res, next) => {
     req.product.destroy()
       .then(() => res.sendStatus(200))

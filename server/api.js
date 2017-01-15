@@ -11,8 +11,9 @@ api
   .use('/orders', require('./orders'))
   .use('/reviews', require('./reviews'))
 
-// Send along any errors
+// Send along any errors AND LOG OUT TO SERVER
 api.use((err, req, res, next) => {
+  console.log(err);
   res.status(500).send(err)
 })
 

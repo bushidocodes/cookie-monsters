@@ -11,6 +11,12 @@ const selfOnly = action => (req, res, next) => {
   }
   next()
 }
+const selfOnlyOrAdmin = action => (req, res, next) => {
+  if (!req.user.isAdmin && req.params.id !== req.user.id) {
+    return res.status(403).send(`You can only ${action} yourself.`)
+  }
+  next()
+}
 
 const forbidden = message => (req, res, next) => {
   res.status(403).send(message)
