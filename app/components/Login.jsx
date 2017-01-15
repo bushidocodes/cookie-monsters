@@ -1,14 +1,17 @@
 import React from 'react'
 
 export const Login = ({ login }) => (
-  <form onSubmit={evt => {
-    evt.preventDefault()
-    login(evt.target.username.value, evt.target.password.value)
-  } }>
-    <input className="authFormField" name="username" />
-    <input className="authFormField" name="password" type="password" />
-    <input className="btn btn-primary" type="submit" value="Login" />
-  </form>
+  <div className="container">
+    <h1 className="display-4">Login</h1>
+    <form onSubmit={evt => {
+      evt.preventDefault()
+      login(evt.target.username.value, evt.target.password.value)
+    } }>
+      <input className="form-control auth-field" name="username" placeholder="Username" />
+      <input className="form-control auth-field" name="password" type="password"  placeholder="Password" />
+      <input className="btn btn-primary" type="submit" value="Login" />
+    </form>
+  </div>
 )
 
 import {login} from '../reducers/auth'

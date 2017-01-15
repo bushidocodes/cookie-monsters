@@ -1,5 +1,5 @@
 a:hover {
-  text-decoration: none !important;
+  text-decoration: none;
 }
 
 /*Landing Page*/
@@ -56,8 +56,8 @@ a:hover {
 }
 
 .quantity {
-  width: 50px !important;
-  display: inline-block !important;
+  width: 50px;
+  display: inline-block;
 }
 
 #quantityText {
@@ -66,13 +66,26 @@ a:hover {
 
 /*Nav*/
 
-#nav {
-  margin-top: 10px;
-  margin-bottom: 10px;
+.navbar-brand {
+  padding-top: 5px;
 }
 
-.navAuth {
+.navbar-brand img {
   display: inline-block;
+}
+
+#brand {
+  height: 40px;
+}
+
+#brand-title {
+  margin-left: 15px;
+}
+
+/*Login & SignUp*/
+
+.auth-field {
+  margin-bottom: 20px !important;
 }
 
 #login {
@@ -104,7 +117,7 @@ html {
 }
 body {
   /* Margin bottom by footer height */
-  margin-bottom: 60px !important;
+  margin-bottom: 60px;
 }
 
 .footer {

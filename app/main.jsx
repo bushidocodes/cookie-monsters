@@ -22,6 +22,7 @@ import WhoAmI from './components/WhoAmI';
 /* Commenting out example app because we can mimic its functionality, perhaps in the Navbar component
    Also: referencing Auther workshop for basic 'root' react component heirarchy (not for code style, but for structure)
 
+
 const ExampleApp = connect(
   ({ auth }) => ({ user: auth })
 ) (
@@ -52,6 +53,8 @@ render (
         <Route path="/order" component={ Order } />
         <Route path="/reviews" component={ Reviews } />
       </Route>
+      <Route path="/signup" component={SignUp} />
+      <Route path="/login" component={Login} />
     </Router>
   </Provider>,
   document.getElementById('main')
