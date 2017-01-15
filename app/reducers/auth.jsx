@@ -1,9 +1,9 @@
 import axios from 'axios'
 
-const reducer = (state=null, action) => {
-  switch(action.type) {
-  case AUTHENTICATED:
-    return action.user
+const reducer = (state = null, action) => {
+  switch (action.type) {
+    case AUTHENTICATED:
+      return action.user
   }
   return state
 }
@@ -16,20 +16,20 @@ export const authenticated = user => ({
 export const login = (username, password) =>
   dispatch =>
     axios.post('/api/auth/local/login',
-      {username, password})
+      { username, password })
       .then(() => dispatch(whoami()))
       .catch(() => dispatch(whoami()))
 
 export const signup = (username, password) =>
   dispatch =>
     axios.post('/api/auth/local/signup',
-      {username, password})
+      { username, password })
       .then(() => dispatch(whoami()))
       .catch(() => dispatch(whoami()))
 
 export const logout = () =>
-  { console.log("logging out")
-    return dispatch =>
+  dispatch => {
+    console.log('dispatch: ', dispatch)
     axios.post('/api/auth/logout')
       .then(() => dispatch(whoami()))
       .catch(() => dispatch(whoami()))
