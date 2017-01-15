@@ -17,7 +17,6 @@ import Order from './components/Order';
 import Products from './components/Products';
 import ProductsContainer from './containers/ProductsContainer';
 import Reviews from './components/Reviews';
-import SignUp from './components/SignUp';
 import WhoAmI from './components/WhoAmI';
 
 /* Commenting out example app because we can mimic its functionality, perhaps in the Navbar component
