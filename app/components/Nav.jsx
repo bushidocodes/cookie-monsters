@@ -6,7 +6,7 @@ import {Link} from 'react-router';
 import SignUp from './SignUp';
 import Login from './Login';
 
-export default () => (
+export default (props) => (
   <nav className="navbar navbar-default">
     <div className="container-fluid">
       {/* Brand and toggle get grouped for better mobile display */}
@@ -25,11 +25,15 @@ export default () => (
       {/* Collect the nav links, forms, and other content for toggling */}
       <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul className="nav navbar-nav navbar-right">
-        {/* if user not logged in */}
-          <li><Link to="/signup">Sign Up</Link></li>
-          <li><Link to="/login">Login</Link></li>
-        {/* if user logged in */}
-          <li><Link to="#">USERNAME Logout</Link></li>
+        {/* handles if user is logged in or not */}
+        {(props.auth && props.auth.role ==="auth") ? (
+          <li><button onClick={props.logout}>{props.auth.name} Logout</button></li>
+          ) : ( <div>
+                  <li><Link to="/signup">Sign Up</Link></li>
+                  <li><Link to="/login">Login</Link></li>
+                </div>
+          )
+        }
         </ul>
       </div>{/* /.navbar-collapse */}
     </div>{/* /.container-fluid */}

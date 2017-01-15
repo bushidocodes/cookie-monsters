@@ -11,6 +11,7 @@ import AppContainer from './containers/AppContainer';
 import Cart from './components/Cart';
 import Footer from './components/Footer';
 import Login from './components/Login';
+import SignUp from './components/SignUp';
 import Nav from './components/Nav';
 import Order from './components/Order';
 import Products from './components/Products';
@@ -49,12 +50,12 @@ render (
     <Router history={ browserHistory }>
       <Route path="/" component={ AppContainer } onEnter={ onAppEnter }>
         <Route path="/products" component={ ProductsContainer } />
-        <IndexRedirect to="/products" />
         <Route path="/order" component={ Order } />
         <Route path="/reviews" component={ Reviews } />
+        <Route path="/signup" component={SignUp} />
+        <Route path="/login" component={Login} />
+        <IndexRedirect to="/products" />
       </Route>
-      <Route path="/signup" component={SignUp} />
-      <Route path="/login" component={Login} />
     </Router>
   </Provider>,
   document.getElementById('main')
