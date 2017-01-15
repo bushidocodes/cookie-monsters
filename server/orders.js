@@ -9,7 +9,8 @@ const {mustBeLoggedIn, forbidden} = require('./auth.filters');
 
 module.exports = require('express').Router()
 
-	// Retrieve all orders, including products and orderlineitem details
+	// Action: Retrieve all orders, including products and orderlineitem details
+	// Roles: Admin
 	.get('/', mustBeLoggedIn, (req, res, next) => {
 		if (req.user.isAdmin) {
 			return Order.findAll({
@@ -40,11 +41,38 @@ module.exports = require('express').Router()
 		}
 	})
 
-	// Create a new empty order without products
-	// The request body may contain status, shippingRate, shippingCarrier, or trackingNumber
-	// TODO: Enhance to be able to create items at the same time once
-	// This should be done when the Redux store structure is better understood
+	// Action: Create a new order
+	// Roles: Guest, User, Admin
+	// Notes: The behavior of this action differs slightly
+	//   based on the role of the user. If the user is a
+	//   guest, they create an order unassociated with
+	//   any single user
+	//   User has actually ordered.
+	.post('/:userId?', (req, res, next) => {
+		if (req.user.isAdmin) {
+			if (req.param.userId) {
+				User.findById(req.param.userId)
+					.then(user => user.create(req.body))
+					.then(order => res.status(200).json(order))
+					.catch(next)
+			} else {
+				Order.create(req.body)
+					.then(order => res.status(200).json(order))
+					.catch(next)
+			}
+		} else if (req.user.role === 'auth') {
+			req.user.createOrder(req.body)
+				.then(order => res.status(200).json(order))
+				.catch(next)
+		} else { // guest checkout
+			Order.create(req.body)
+				.then(order => res.status(200).json(order))
+				.catch(next)
+		}
+	})
 
+	// TODO: Enhance to be able to create items at the same time once
+	//   Using this structure:
 
 	// "order": {
 	// 	"status": "cancelled",
@@ -57,23 +85,7 @@ module.exports = require('express').Router()
 	// 	}
 	// }
 
-	.post('/', (req, res, next) => { //add optional userid...
-		if (req.user.isAdmin) { //TODO: The admin should be able to create orders for other people
-			Order.create(req.body)
-				.then(order => res.status(200).json(order))
-				.catch(next)
-		} else if (req.user.role === 'auth') {
-			req.user.createOrder(req.body)
-				.then(order => res.status(200).json(order))
-				.catch(next)
-		} else { // guest checkout
-			Order.create(req.body)
-				.then(order => res.status(200).json(order))
-				.catch(next)
-		}
-	})
-
-	// This is just a starting point for pair programming with Eliot tomorrow
+	// This is a non-functional starting point
 	// .post('/', (req, res, next) =>
 	// 	Order.create(req.body, {
 	// 		include: [{
@@ -87,8 +99,9 @@ module.exports = require('express').Router()
 	// 		.then(order => res.json(order))
 	// 		.catch(next))
 
-
-	// Retrieve a single order, including products and orderlineitem details
+	// Action: Retrieve a single order, including products and orderlineitem details
+	// Roles: Admin.
+	// Notes: Perhaps a user should be able to view this for their orders...
 	.get('/:orderId', mustBeLoggedIn, (req, res, next) => {
 		if (req.user.isAdmin) {
 			return Order.findById(req.params.orderId, {
@@ -106,8 +119,8 @@ module.exports = require('express').Router()
 		}
 	})
 
-	// Update an order
-
+	// Action: Update an order
+	// Roles: Admin.
 	.put('/:orderId', mustBeLoggedIn, (req, res, next) => {
 		if (req.user.isAdmin) {
 			return Order.findById(req.params.orderId)
@@ -119,7 +132,8 @@ module.exports = require('express').Router()
 		}
 	})
 
-	// Delete an order
+	// Action: Delete an order
+	// Roles: Admin.
 	.delete('/:orderId/', mustBeLoggedIn, (req, res, next) => {
 		if (req.user.isAdmin) {
 			return Order.findById(parseInt(req.params.orderId, 10))
@@ -131,15 +145,13 @@ module.exports = require('express').Router()
 		}
 	})
 
-
-	// Move product ID and quantity to req.body
-	// Add several items to an order or update the item count in an order
-
+	// Action: Add several items to an order or update the item count in an order
+	// Roles: Admin.
+	// Example Request Body
 	// {"orderLineItems": {
 	// 	"2": {"quantity": 10},
 	//  	"10": {"quantity": 2}
 	// }}
-
 	.post('/:orderId/products/', mustBeLoggedIn, (req, res, next) => {
 		if (req.user.isAdmin) {
 			let orderLineItems = req.body.orderLineItems;
@@ -165,7 +177,8 @@ module.exports = require('express').Router()
 		}
 	})
 
-	// Remove an item from an order
+	// Action: Remove an item from an order
+	// Roles: Admin.
 	.delete('/:orderId/products/:productId', mustBeLoggedIn, (req, res, next) => {
 		if (req.user.isAdmin) {
 			return Order.findById(req.params.orderId)
