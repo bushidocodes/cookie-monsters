@@ -23,7 +23,7 @@ describe('/api/orders/', () => {
 
   describe('GET / (as Non-Admin)', () => {
     const agent = request.agent(app)
-    let user;
+    let user, product, associatedOrder, unassociatedOrder;
     before('Create non-admin user and login', () =>
       db.didSync
         .then(() =>
@@ -40,21 +40,30 @@ describe('/api/orders/', () => {
             .post('/api/auth/local/login')
             .send(dallas)
         })
-        .then(res => user.addOrder())
+        .then(res => user.createOrder())
+        .then(_associatedOrder => associatedOrder = _associatedOrder)
+        .then(_order => Order.create())
+        .then(_unassociatedOrder => unassociatedOrder = _unassociatedOrder)
     )
+
     it('returns only the logged-in user orders', () => agent
       .get('/api/orders/')
       .expect(200)
-      .then(res => console.log("\tOrders :", res.body))
+      .then(res => {
+        expect(res.body).to.have.lengthOf(1);
+        expect(res.body[0].orderID).to.equal(associatedOrder.orderID);
+      })
     )
     after('logoff and destroy non-admin user', () => {
+      associatedOrder.destroy();
+      unassociatedOrder.destroy();
       user.destroy();
       agent.post('/logout');
     })
   })
 
   describe('GET / (as Admin)', () => {
-    let user;
+    let user, order;
     const agent = request.agent(app)
     before('Create Admin user and Login', () =>
       db.didSync
@@ -73,11 +82,13 @@ describe('/api/orders/', () => {
             .post('/api/auth/local/login')
             .send(bobTheAdmin)
         })
+        .then(res => Order.create())
+        .then(_order => order = _order)
     )
     it('returns all orders if admin', () => agent
       .get('/api/orders/')
       .expect(200)
-      .then(res => console.log("\tOrders :", res.body))
+      .then(res => expect(res.body).to.include(order))
     )
     after('logoff and destroy non-admin user', () => {
       user.destroy();
@@ -111,7 +122,7 @@ describe('/api/orders/', () => {
     )
     it('adds an order associated with the current logged in user', () => agent
       .post('/api/orders/')
-      .send({"shippingCarrier": "UPS"})
+      .send({ "shippingCarrier": "UPS" })
       .expect(200)
       .then(res => {
         orderID = res.body.orderID;
@@ -152,7 +163,7 @@ describe('/api/orders/', () => {
     )
     it('adds an order unassociated with a particular user', () => agent
       .post('/api/orders/')
-      .send({"shippingCarrier": "USPS"})
+      .send({ "shippingCarrier": "USPS" })
       .expect(200)
       .then(res => {
         orderID = res.body.orderID;

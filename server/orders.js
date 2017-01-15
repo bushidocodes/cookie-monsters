@@ -46,7 +46,7 @@ module.exports = require('express').Router()
 	// This should be done when the Redux store structure is better understood
 
 
-	// {
+	// "order": {
 	// 	"status": "cancelled",
 	//   "shippingRate": 9.99,
 	//   "shippingCarrier": null,
@@ -57,16 +57,17 @@ module.exports = require('express').Router()
 	// 	}
 	// }
 
-	.post('/', (req, res, next) => {
-		console.log('\tRunning POST /api/orders/');
-		if (req.user.isAdmin) {
+	.post('/', (req, res, next) => { //add optional userid...
+		if (req.user.isAdmin) { //TODO: The admin should be able to create orders for other people
 			Order.create(req.body)
 				.then(order => res.status(200).json(order))
 				.catch(next)
-		} else {
-			console.log('\tUser is not an Admin');
-			console.log('\treq.user.id is ', req.user.id);
+		} else if (req.user.role === 'auth') {
 			req.user.createOrder(req.body)
+				.then(order => res.status(200).json(order))
+				.catch(next)
+		} else { // guest checkout
+			Order.create(req.body)
 				.then(order => res.status(200).json(order))
 				.catch(next)
 		}
@@ -88,34 +89,47 @@ module.exports = require('express').Router()
 
 
 	// Retrieve a single order, including products and orderlineitem details
-	.get('/:orderId', (req, res, next) => {
-		Order.findById(req.params.orderId, {
-			include: [{
-				model: Product,
-				through: {
-					attributes: ['quantity', 'price']
-				}
-			}]
-		}).then(orders => _promisifyOrderProps(orders))
-			.then(order => res.json(order))
-			.catch(next)
+	.get('/:orderId', mustBeLoggedIn, (req, res, next) => {
+		if (req.user.isAdmin) {
+			return Order.findById(req.params.orderId, {
+				include: [{
+					model: Product,
+					through: {
+						attributes: ['quantity', 'price']
+					}
+				}]
+			}).then(orders => _promisifyOrderProps(orders))
+				.then(order => res.json(order))
+				.catch(next)
+		} else {
+			forbidden("You are not authorized to do this.");
+		}
 	})
 
 	// Update an order
 
-	.put('/:orderId', (req, res, next) => {
-		Order.findById(req.params.orderId)
-			.then(order => order.update(req.body))
-			.then(order => res.status(200).json(order))
-			.catch(next)
+	.put('/:orderId', mustBeLoggedIn, (req, res, next) => {
+		if (req.user.isAdmin) {
+			return Order.findById(req.params.orderId)
+				.then(order => order.update(req.body))
+				.then(order => res.status(200).json(order))
+				.catch(next)
+		} else {
+			forbidden("You are not authorized to do this.");
+		}
 	})
 
 	// Delete an order
-	.delete('/:orderId/', (req, res, next) =>
-		Order.findById(parseInt(req.params.orderId, 10))
-			.then(order => order.destroy())
-			.then(res.sendStatus(200))
-			.catch(next))
+	.delete('/:orderId/', mustBeLoggedIn, (req, res, next) => {
+		if (req.user.isAdmin) {
+			return Order.findById(parseInt(req.params.orderId, 10))
+				.then(order => order.destroy())
+				.then(res.sendStatus(200))
+				.catch(next);
+		} else {
+			forbidden("You are not authorized to do this.");
+		}
+	})
 
 
 	// Move product ID and quantity to req.body
@@ -148,11 +162,15 @@ module.exports = require('express').Router()
 	})
 
 	// Remove an item from an order
-	.delete('/:orderId/products/:productId', (req, res, next) => {
-		Order.findById(req.params.orderId)
-			.then(order => order.removeProduct(req.params.productId))
-			.then(res.sendStatus(200))
-			.catch(next)
+	.delete('/:orderId/products/:productId', mustBeLoggedIn, (req, res, next) => {
+		if (req.user.isAdmin) {
+			return Order.findById(req.params.orderId)
+				.then(order => order.removeProduct(req.params.productId))
+				.then(res.sendStatus(200))
+				.catch(next);
+		} else {
+			forbidden("You are not authorized to do this.");
+		}
 	})
 
 // This is a kludgey looking helper function to deal with resolving a Promise
