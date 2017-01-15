@@ -60,15 +60,24 @@ module.exports = require('express').Router()
 					.then(order => res.status(200).json(order))
 					.catch(next)
 			}
-		} else if (req.user.role === 'auth') {
+		} else { //Just assuming user and ignoring guests for now. See TODO below.
 			req.user.createOrder(req.body)
 				.then(order => res.status(200).json(order))
 				.catch(next)
-		} else { // guest checkout
-			Order.create(req.body)
-				.then(order => res.status(200).json(order))
-				.catch(next)
 		}
+		// TODO: I am unclear how req-user.role works. I need to know this to understand how to differentiate
+		//   between guests and users
+		// else if (req.user.role === 'auth') {
+		// 	console.log("Auth");
+		// 	req.user.createOrder(req.body)
+		// 		.then(order => res.status(200).json(order))
+		// 		.catch(next)
+		// } else { // guest checkout
+		// 	console.log("Not Auth. req.user is :", req.user);
+		// 	Order.create(req.body)
+		// 		.then(order => res.status(200).json(order))
+		// 		.catch(next)
+		// }
 	})
 
 	// TODO: Enhance to be able to create items at the same time once
