@@ -1,11 +1,10 @@
 const db = require('../db')
 
 const seedUsers = () => db.Promise.map([
-  {name: 'Evan', email: 'evan@example.com', password: '1234', isAdmin: true, role: 'auth'},
-  {name: 'Sean', email: 'sean@example.com', password: '1234', isAdmin: true, role: 'auth'},
-  {name: 'Rachel', email: 'rachel@example.com', password: '1234', isAdmin: true, role: 'auth'},
-  {name: 'Test1', email: 'test1@example.com', password: '1234', isAdmin: false, role: 'unauth'},
-  {name: 'Test2', email: 'test2@example.com', password: '1234', isAdmin: false, role: 'auth'},
+  {name: 'Evan', email: 'evan@example.com', password: '1234', isAdmin: true},
+  {name: 'Sean', email: 'sean@example.com', password: '1234', isAdmin: true},
+  {name: 'Rachel', email: 'rachel@example.com', password: '1234', isAdmin: true},
+  {name: 'Test1', email: 'test1@example.com', password: '1234', isAdmin: false}
 ], user => db.model('users').create(user))
 
 const seedProducts = () => db.Promise.map([
