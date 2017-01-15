@@ -4,10 +4,13 @@ const db = require('../db');
 const User = db.model('users');
 
 const {mustBeLoggedIn, selfOnlyOrAdmin, forbidden} = require('./auth.filters');
-
+// const selfOrAdmin = selfOnlyOrAdmin("select");
+// console.log(selfOnlyOrAdmin("select"));
 module.exports = require('express').Router()
 
-
+	// Action: View All users
+	// Roles: Admin
+	// Notes:
 	.get('/', mustBeLoggedIn, (req, res, next) => {
 		if (req.user.isAdmin) {
 			User.findAll()
@@ -18,19 +21,20 @@ module.exports = require('express').Router()
 		}
 	})
 
-	.post('/', mustBeLoggedIn, (req, res, next) => {
-		if (req.user.isAdmin) {
-			return User.create(req.body)
-				.then(user => res.status(201).json(user))
-				.catch(next)
-		} else {
-			forbidden('only admins can add users')
-		}
+	// Action: Create a new user
+	// Roles: Guest, Admin
+	// Notes: A signed in user should not be able to create a new user
+	// TODO: Harden this route.
+	.post('/', (req, res, next) => { //selfOnlyOrAdmin,
+		return User.create(req.body)
+			.then(user => res.status(201).json(user))
+			.catch(next)
 	})
 
-	// Use Param to DRY subsequent routes...
-	// Implemented this when I thought there would be multiple routes
-	.param('id', mustBeLoggedIn, selfOnlyOrAdmin("select"), function (req, res, next) {
+	// Action: Param for User ID
+	// Roles: User, Admin
+	// Notes: A User should only be able to see their own stuff
+	.param('id', mustBeLoggedIn, function (req, res, next) { //selfOnlyOrAdmin,
 		User.findById(req.params.id)
 			.then(user => {
 				if (user) {
@@ -43,13 +47,22 @@ module.exports = require('express').Router()
 			.catch(next);
 	})
 
+	// Action: Get user by ID
+	// Roles: User, Admin
+	// Notes:
 	.get('/:id', (req, res, next) =>
 		res.status(200).json(req.user))
 
-	// TODO: Implement put
+	// Action: Modify user by ID
+	// Roles: User, Admin
+	// Notes:
+	// TODO: Implement
 	// .put('/:id', (req, res, next) =>
 	// 	res.status(200).json(req.user))
 
+	// Action: Delete user by ID
+	// Roles: User, Admin
+	// Notes:
 	// TODO: Implement delete
 	// .delete('/:id', (req, res, next) =>
 	// 	res.status(200).json(req.user))
