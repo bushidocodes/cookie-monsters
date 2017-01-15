@@ -140,25 +140,29 @@ module.exports = require('express').Router()
 	//  	"10": {"quantity": 2}
 	// }}
 
-	.post('/:orderId/products/', (req, res, next) => {
-		let orderLineItems = req.body.orderLineItems;
-		let productIds = Object.keys(orderLineItems);
-		let order;
-		Order.findById(req.params.orderId)
-			.then(_order => {
-				order = _order;
-				return Promise.all(productIds.map(productId => Product.findById(productId)))
-			})
-			.then(products => {
-				products.forEach((product) =>
-					order.addProduct(product, {
-						quantity: orderLineItems[product.id].quantity,
-						price: product.price
-					})
-				)
-			})
-			.then(res.sendStatus(200))
-			.catch(next)
+	.post('/:orderId/products/', mustBeLoggedIn, (req, res, next) => {
+		if (req.user.isAdmin) {
+			let orderLineItems = req.body.orderLineItems;
+			let productIds = Object.keys(orderLineItems);
+			let order;
+			Order.findById(req.params.orderId)
+				.then(_order => {
+					order = _order;
+					return Promise.all(productIds.map(productId => Product.findById(productId)))
+				})
+				.then(products => {
+					products.forEach((product) =>
+						order.addProduct(product, {
+							quantity: orderLineItems[product.id].quantity,
+							price: product.price
+						})
+					)
+				})
+				.then(res.sendStatus(200))
+				.catch(next)
+		} else {
+			forbidden("You are not authorized to do this.");
+		}
 	})
 
 	// Remove an item from an order

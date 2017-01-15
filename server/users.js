@@ -3,21 +3,34 @@
 const db = require('../db');
 const User = db.model('users');
 
-const {mustBeLoggedIn, forbidden} = require('./auth.filters');
+const {mustBeLoggedIn, selfOnlyOrAdmin, forbidden} = require('./auth.filters');
 
 module.exports = require('express').Router()
-	.get('/', forbidden('only admins can list users'), (req, res, next) =>
-		User.findAll()
-			.then(users => res.json(users))
-			.catch(next))
-	.post('/', (req, res, next) =>
-		User.create(req.body)
-			.then(user => res.status(201).json(user))
-			.catch(next))
+
+
+	.get('/', mustBeLoggedIn, (req, res, next) => {
+		if (req.user.isAdmin) {
+			User.findAll()
+				.then(users => res.json(users))
+				.catch(next)
+		} else {
+			forbidden('only admins can list all users')
+		}
+	})
+
+	.post('/', mustBeLoggedIn, (req, res, next) => {
+		if (req.user.isAdmin) {
+			return User.create(req.body)
+				.then(user => res.status(201).json(user))
+				.catch(next)
+		} else {
+			forbidden('only admins can add users')
+		}
+	})
 
 	// Use Param to DRY subsequent routes...
 	// Implemented this when I thought there would be multiple routes
-	.param('id', mustBeLoggedIn, function (req, res, next) {
+	.param('id', mustBeLoggedIn, selfOnlyOrAdmin("select"), function (req, res, next) {
 		User.findById(req.params.id)
 			.then(user => {
 				if (user) {
