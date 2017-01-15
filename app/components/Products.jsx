@@ -9,9 +9,7 @@ export default function (props) {
   const products = props.products;
 
   return (
-
     <div>
-      <Nav />
       <div className="container">
         <div id="headerRow" className="row">
           <div className="col-sm-6 col-xs-12">
@@ -29,7 +27,6 @@ export default function (props) {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
-};
+}
