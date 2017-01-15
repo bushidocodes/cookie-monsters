@@ -10,6 +10,7 @@ import store from './store'
 import Jokes from './components/Jokes'
 import Products from './components/Products'
 import Order from './components/Order'
+import Reviews from './components/Reviews'
 import Login from './components/Login'
 import Signup from './components/SignUp'
 import WhoAmI from './components/WhoAmI'
@@ -43,6 +44,7 @@ render (
         <IndexRedirect to="/products" />
       </Route>
       <Route path="/order" component={Order} />
+      <Route path="/reviews" component={Reviews} />
     </Router>
   </Provider>,
   document.getElementById('main')
