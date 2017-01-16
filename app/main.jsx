@@ -10,18 +10,14 @@ import { receiveUsers } from './reducers/users';
 import store from './store';
 
 import AppContainer from './containers/AppContainer';
-import Cart from './components/Cart';
-import Footer from './components/Footer';
+import CartViewContainer from './containers/CartViewContainer';
 import LoginContainer from './containers/LoginContainer';
 import SignUp from './components/SignUp';
-import Nav from './components/Nav';
 import Order from './components/Order';
-import Products from './components/Products';
 import ProductsContainer from './containers/ProductsContainer';
 import UserContainer from './containers/UserContainer';
 import UsersContainer from './containers/UsersContainer';
 import Reviews from './components/Reviews';
-import WhoAmI from './components/WhoAmI';
 
 /* Commenting out example app because we can mimic its functionality, perhaps in the Navbar component
    Also: referencing Auther workshop for basic 'root' react component heirarchy (not for code style, but for structure)
@@ -48,6 +44,7 @@ const onAppEnter = function () {
     });
 };
 
+
 const onUsersEnter = function () {
   //if user is an admin
   store.dispatch(receiveUsers());
@@ -58,6 +55,7 @@ render(
     <Router history={browserHistory}>
       <Route path="/" component={AppContainer} onEnter={onAppEnter}>
         <Route path="/products" component={ProductsContainer} />
+        <Route path="/viewcart" component={ CartViewContainer } />
         <Route path="/order" component={Order} />
         <Route path="/reviews" component={Reviews} />
         <Route path="/signup" component={SignUp} />

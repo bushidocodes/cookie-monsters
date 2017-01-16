@@ -7,6 +7,7 @@ import Cart from './Cart';
 export default function (props) {
 
   const products = props.products;
+  const plusItemzToCart = props.plusItemzToCart;
 
   return (
     <div>
@@ -23,7 +24,7 @@ export default function (props) {
         </div>
         <div className="container">
           <div className="row">
-            {products.map( (cookie, index) => <Product key={index} cookie={cookie} /> )}
+            {products.map( (cookie, index) => <Product key={index} cookie={cookie} plusItemzToCart={plusItemzToCart}/> )}
           </div>
         </div>
       </div>
