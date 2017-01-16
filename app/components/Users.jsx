@@ -11,14 +11,16 @@ export default (props) => {
   console.log("SELECTED USER: ", selectedUser);
   console.log("SELECT USER: ", selectUser);
   return (
-    <div className="col-xs-18 col-sm-6 col-md-3">
-      <h2>All Users</h2>
-      <ul>
-      {users.map((user, index) => <li key={user.email} onClick={(evt)=>{
-        evt.preventDefault();
-        selectUser(user);
-      }}>{user.email}</li> )}
-      </ul>
+    <div className="container">
+      <div className="col-xs-12 col-sm-4">
+        <h2>All the Cookie Monsters</h2>
+        <div id="users" className="list-group">
+          {users.map((user, index) => <li key={user.email} className="list-group-item list-group-item-action"><a onClick={(evt)=>{
+          evt.preventDefault();
+          selectUser(user);
+        }}>{user.name}</a></li> )}
+        </div>
+      </div>
     </div>
   )
 };

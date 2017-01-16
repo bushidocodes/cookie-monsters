@@ -166,3 +166,9 @@ body {
 .reviewUser {
   font-style: italic;
 }
+
+/*Users*/
+
+#users a:hover {
+  cursor: pointer;
+}
