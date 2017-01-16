@@ -16,7 +16,7 @@ export default (props) => {
     <div className="pull-right">
       <p id="cartPreviewText">
         <i id="cartPreviewIcon" className="fa fa-shopping-cart"></i>
-        <span>{numOfItems}</span> items totaling <span>${total}</span>
+        <span> {numOfItems}</span> items totaling <span>${(total).toFixed(2)} </span>
         <Link className="btn btn-success btn-sm" to="/viewcart">View Cart</Link>
       </p>
     </div>
