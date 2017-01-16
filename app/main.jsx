@@ -3,8 +3,10 @@ import React from 'react'
 import { Router, Route, IndexRedirect, browserHistory } from 'react-router';
 import { render } from 'react-dom';
 import { connect, Provider } from 'react-redux';
-import { receiveProducts } from './reducers/products';
 import axios from 'axios';
+import { receiveProducts } from './reducers/products';
+// TODO: Make sure that this func acts similarly to receiveProducts
+import { receiveUsers } from './reducers/users';
 import store from './store';
 
 import AppContainer from './containers/AppContainer';
@@ -13,6 +15,8 @@ import LoginContainer from './containers/LoginContainer';
 import SignUp from './components/SignUp';
 import Order from './components/Order';
 import ProductsContainer from './containers/ProductsContainer';
+import UserContainer from './containers/UserContainer';
+import UsersContainer from './containers/UsersContainer';
 import Reviews from './components/Reviews';
 
 /* Commenting out example app because we can mimic its functionality, perhaps in the Navbar component
@@ -40,16 +44,24 @@ const onAppEnter = function () {
     });
 };
 
-render (
-  <Provider store={ store }>
-    <Router history={ browserHistory }>
-      <Route path="/" component={ AppContainer } onEnter={ onAppEnter }>
-        <Route path="/products" component={ ProductsContainer } />
+
+const onUsersEnter = function () {
+  //if user is an admin
+  store.dispatch(receiveUsers());
+};
+
+render(
+  <Provider store={store}>
+    <Router history={browserHistory}>
+      <Route path="/" component={AppContainer} onEnter={onAppEnter}>
+        <Route path="/products" component={ProductsContainer} />
         <Route path="/viewcart" component={ CartViewContainer } />
-        <Route path="/order" component={ Order } />
-        <Route path="/reviews" component={ Reviews } />
+        <Route path="/order" component={Order} />
+        <Route path="/reviews" component={Reviews} />
         <Route path="/signup" component={SignUp} />
         <Route path="/login" component={LoginContainer} />
+        <Route path="/users" component={UsersContainer} onEnter={onUsersEnter}/>
+        <Route path="/user" component={UserContainer} />
         <IndexRedirect to="/products" />
       </Route>
     </Router>
