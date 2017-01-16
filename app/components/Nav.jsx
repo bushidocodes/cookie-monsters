@@ -3,9 +3,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 
-import SignUp from './SignUp';
-import Login from './Login';
-
 export default (props) => (
     <nav className="navbar navbar-default">
       <div className="container-fluid">

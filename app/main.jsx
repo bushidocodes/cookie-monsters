@@ -1,9 +1,9 @@
 'use strict'
 import React from 'react'
-import {Router, Route, IndexRedirect, browserHistory} from 'react-router';
-import {render} from 'react-dom';
-import {connect, Provider} from 'react-redux';
-import {receiveProducts} from './reducers/products';
+import { Router, Route, IndexRedirect, browserHistory } from 'react-router';
+import { render } from 'react-dom';
+import { connect, Provider } from 'react-redux';
+import { receiveProducts } from './reducers/products';
 import axios from 'axios';
 import store from './store';
 
@@ -49,7 +49,7 @@ render (
         <Route path="/order" component={ Order } />
         <Route path="/reviews" component={ Reviews } />
         <Route path="/signup" component={SignUp} />
-        <Route path="/login" component={Login} />
+        <Route path="/login" component={LoginContainer} />
         <IndexRedirect to="/products" />
       </Route>
     </Router>

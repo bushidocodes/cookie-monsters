@@ -1,6 +1,8 @@
 import React from 'react'
 
-export const Login = ({ login }) => (
+export default function (props) {
+  let login = props.login;
+  return (
   <div className="container">
     <h1 className="display-4">Login</h1>
     <form onSubmit={evt => {
@@ -12,12 +14,5 @@ export const Login = ({ login }) => (
       <input className="btn btn-primary" type="submit" value="Login" />
     </form>
   </div>
-)
+)}
 
-import {login} from '../reducers/auth'
-import {connect} from 'react-redux'
-
-export default connect (
-  state => ({}),
-  {login},
-) (Login)
