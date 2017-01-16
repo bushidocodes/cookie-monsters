@@ -10,7 +10,10 @@ export default ({ cookie }) => (
         <img className="cookieImage" src={cookie.photo} />
       </div>
       <div className="caption">
-        <h4>{cookie.name}</h4>
+    {/* Handles case of Seinfeld's race relations cookie discussion */}
+        <h4>{cookie.name === "Black & White Cookie" ? (
+           <a href="https://www.youtube.com/watch?v=IlLPAIrmqvE">{cookie.name}</a>
+           ) : (cookie.name) }</h4>
         <p>{cookie.description}</p>
         <p className="cookieCategory">{cookie.categories.map ( category => category ).join(', ')}</p>
         <p><Link to="/reviews">Reviews</Link></p>

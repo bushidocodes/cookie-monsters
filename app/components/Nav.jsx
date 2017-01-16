@@ -26,7 +26,8 @@ export default (props) => (
             {props.auth ? (
               <ul className="nav navbar-nav navbar-right">
                 <li>
-                  <p className="navbar-text">Hello, {props.auth.name}!</p>
+                  {/* TODO: this link doesn't work correctly yet */}
+                  <p className="navbar-text">Hello, <Link to="/user">{props.auth.name}</Link>!</p>
                 </li>
                 {props.auth.isAdmin ? (<li><Link to="/users">Users</Link></li>) : ''}
                 <li>
