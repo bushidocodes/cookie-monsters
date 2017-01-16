@@ -4,6 +4,7 @@
 
 a:hover {
   text-decoration: none;
+  cursor: pointer;
 }
 
 /*Landing Page*/
@@ -86,10 +87,6 @@ a:hover {
   margin-left: 15px;
 }
 
-.navbar-nav>li>a:hover {
-  cursor: pointer;
-}
-
 @media only screen and (max-width: 768px) {
   .navbar-nav>li>p.navbar-text {
     margin-left: 15px;
@@ -167,8 +164,14 @@ body {
   font-style: italic;
 }
 
-/*Users*/
+/*User Form*/
 
-#users a:hover {
-  cursor: pointer;
+#user-form {
+  position: relative;
+  margin: 1rem -1rem;
+  border: solid #f7f7f9;
+}
+
+.cancel-btn {
+  margin-left: 5px;
 }

@@ -5,7 +5,8 @@ import {browserHistory} from 'react-router';
 
 function mapStateToProps(state) {
   return {
-    users: state.users
+    users: state.users,
+    auth: state.auth
   }
 }
 
