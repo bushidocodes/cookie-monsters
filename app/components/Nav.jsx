@@ -21,20 +21,30 @@ export default (props) => (
         </div>
         {/* Collect the nav links, forms, and other content for toggling */}
         <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul className="nav navbar-nav navbar-right">
             {/* handles if user is logged in or not */}
+            {/* have to put ul's inside ternary for styling purposes */}
             {props.auth ? (
-              <li><button onClick={evt => {
-                evt.preventDefault()
-                props.logout()
-              } }>{props.auth.name} Logout</button></li>
-            ) : (<div>
-              <li><Link to="/signup">Sign Up</Link></li>
-              <li><Link to="/login">Login</Link></li>
-            </div>
+              <ul className="nav navbar-nav navbar-right">
+                <li>
+                  <p className="navbar-text">Hello, {props.auth.name}!</p>
+                </li>
+                {props.auth.isAdmin ? (<li><Link to="/users">Users</Link></li>) : ''}
+                <li>
+                  <a onClick={evt => {
+                  evt.preventDefault()
+                  props.logout()
+                  } }>Logout</a>
+                </li>
+              </ul>
+            ) : (
+                <div>
+                  <ul className="nav navbar-nav navbar-right">
+                    <li><Link to="/signup">Sign Up</Link></li>
+                    <li><Link to="/login">Login</Link></li>
+                  </ul>
+                </div>
               )
             }
-          </ul>
         </div>{/* /.navbar-collapse */}
       </div>{/* /.container-fluid */}
     </nav>
