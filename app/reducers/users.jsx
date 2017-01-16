@@ -46,28 +46,4 @@ export function receiveUsers() {
   }
 }
 
-// export const signup = (username, password) =>
-//   dispatch =>
-//     axios.post('/api/auth/local/signup',
-//       { username, password })
-//       .then(() => dispatch(whoami()))
-//       .catch(() => dispatch(whoami()))
-
-// export const logout = () =>
-//   dispatch => {
-//     console.log('dispatch: ', dispatch)
-//     axios.post('/api/auth/logout')
-//       .then(() => dispatch(whoami()))
-//       .catch(() => dispatch(whoami()))
-//   }
-
-// export const whoami = () =>
-//   dispatch =>
-//     axios.get('/api/auth/whoami')
-//       .then(response => {
-//         const user = response.data
-//         dispatch(authenticated(user))
-//       })
-//       .catch(failed => dispatch(authenticated(null)))
-
 export default reducer
