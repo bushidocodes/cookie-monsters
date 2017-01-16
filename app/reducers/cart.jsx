@@ -34,9 +34,16 @@ const reducer = (lineItems = [], action) => {
 
 	switch (action.type) {
 		case ADD_TO_CART:
-			return [...lineItems, action.lineItem];
+			let newState = [...lineItems, action.lineItem];
+			localStorage.setItem('cart', JSON.stringify(newState))
+			return newState;
 		default:
-			return lineItems;
+			let defrostedCart = localStorage.getItem('cart');
+			if (defrostedCart) {
+				return JSON.parse(defrostedCart)
+			} else {
+				return lineItems;
+			}
 	}
 }
 
