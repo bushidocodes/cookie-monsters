@@ -7,7 +7,7 @@ import Cart from './Cart';
 // Need to figure out how to access products added to the cart from the req.session
 
 export default (props) => {
-  console.log("My cart items are ", props.cart);
+  console.log("My props are ", props.cart);
 
   return (
     <div className="container">
@@ -25,7 +25,7 @@ export default (props) => {
       <div className="row">
         <div className="col-sm-6 col-xs-12">
           <ul>
-            {props.cart.map((item)=> <li>Item Name : Item Quantity</li>)}
+            {props.cart.map((item) => <li key={item.product.id}>{item.product.name} : {item.quantity}</li>)}
           </ul>
         </div>
       </div>
