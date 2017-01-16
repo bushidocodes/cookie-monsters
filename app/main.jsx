@@ -8,8 +8,8 @@ import axios from 'axios';
 import store from './store';
 
 import AppContainer from './containers/AppContainer';
-import CartView from './components/CartView';
-import Login from './components/Login';
+import CartViewContainer from './containers/CartViewContainer';
+import LoginContainer from './containers/LoginContainer';
 import SignUp from './components/SignUp';
 import Order from './components/Order';
 import ProductsContainer from './containers/ProductsContainer';
@@ -45,7 +45,7 @@ render (
     <Router history={ browserHistory }>
       <Route path="/" component={ AppContainer } onEnter={ onAppEnter }>
         <Route path="/products" component={ ProductsContainer } />
-        <Route path="/viewcart" component={ CartView } />
+        <Route path="/viewcart" component={ CartViewContainer } />
         <Route path="/order" component={ Order } />
         <Route path="/reviews" component={ Reviews } />
         <Route path="/signup" component={SignUp} />

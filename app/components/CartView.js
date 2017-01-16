@@ -6,18 +6,29 @@ import Cart from './Cart';
 
 // Need to figure out how to access products added to the cart from the req.session
 
-export default (props) => (
-	<div className="container">
-		<div id="headerRow" className="row">
-      <div className="col-sm-6 col-xs-12">
-        <img className="cookieMonsterImg" src='/images/cookie-monster.jpg' />
-        <h1>Cookie Monsters</h1>
-        <h3 className="subtitle">Home of the world's greatest cookies</h3>
-      </div>
+export default (props) => {
+  console.log("My cart items are ", props.cart);
 
-      <div id="cartRow" className="col-sm-6 col-xs-12">
-        <Cart />
+  return (
+    <div className="container">
+      <div id="headerRow" className="row">
+        <div className="col-sm-6 col-xs-12">
+          <img className="cookieMonsterImg" src='/images/cookie-monster.jpg' />
+          <h1>Cookie Monsters</h1>
+          <h3 className="subtitle">Home of the world's greatest cookies</h3>
+        </div>
+
+        <div id="cartRow" className="col-sm-6 col-xs-12">
+          <Cart />
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-sm-6 col-xs-12">
+          <ul>
+            {props.cart.map((item)=> <li>Item Name : Item Quantity</li>)}
+          </ul>
+        </div>
       </div>
     </div>
-	</div>
-);
+  )
+};
