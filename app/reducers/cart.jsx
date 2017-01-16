@@ -38,15 +38,15 @@ const reducer = (lineItems = [], action) => {
 		default:
 			return lineItems;
 	}
-}
+};
 
 // Action Creator
 export function addToCart(product, quantity) {
 	return {
 		type: ADD_TO_CART,
 		lineItem: { product, quantity }
-	}
-};
+	};
+}
 
 // props.cart[0].productId
 // props.cart[0].quantity
