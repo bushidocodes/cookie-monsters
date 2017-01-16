@@ -4,6 +4,7 @@
 
 a:hover {
   text-decoration: none;
+  cursor: pointer;
 }
 
 /*Landing Page*/
@@ -86,10 +87,6 @@ a:hover {
   margin-left: 15px;
 }
 
-.navbar-nav>li>a:hover {
-  cursor: pointer;
-}
-
 @media only screen and (max-width: 768px) {
   .navbar-nav>li>p.navbar-text {
     margin-left: 15px;
@@ -165,12 +162,6 @@ body {
 
 .reviewUser {
   font-style: italic;
-}
-
-/*Users*/
-
-#users a:hover {
-  cursor: pointer;
 }
 
 /*User Form*/
