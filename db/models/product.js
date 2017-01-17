@@ -11,6 +11,7 @@ const Product = db.define('products', {
     allowNull: false,
     validate: {
       notEmpty: true
+      // TODO: Enforce unique names for products
     }
   },
   description: {
@@ -27,16 +28,18 @@ const Product = db.define('products', {
       notEmpty: true
     }
   },
-  quantity: {
+  quantity: { // This is the remaining product inventory
     type: Sequelize.INTEGER,
     allowNull: false,
     validate: {
-      notEmpty: true
+      notEmpty: true,
+      min: 0
     }
   },
-  photo: Sequelize.STRING,
+  photo: {
+    type: Sequelize.STRING,
+  },
   categories: Sequelize.ARRAY(Sequelize.STRING)
 });
 
-Product.hasMany(Review);
 module.exports = Product;
