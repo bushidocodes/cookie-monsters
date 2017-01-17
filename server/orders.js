@@ -145,7 +145,7 @@ module.exports = require('express').Router()
 	// Roles: Admin.
 	.delete('/:id/', mustBeLoggedIn, (req, res, next) => {
 		if (req.user.isAdmin) {
-			return Order.findById(parseInt(req.params.id, 10))
+			return Order.findById(req.params.id)
 				.then(order => order.destroy())
 				.then(res.sendStatus(200))
 				.catch(next);
