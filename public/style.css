@@ -41,6 +41,16 @@ a:hover {
   font-size: 16px;
 }
 
+.thumbContainer {
+  height: 150px;
+  width: 150px;
+  overflow: hidden;
+}
+
+.thumbImg {
+  width: 100%;
+}
+
 /*Product Grid*/
 
 .cookieContainer {

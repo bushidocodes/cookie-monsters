@@ -13,7 +13,7 @@ export default (props) => {
       <div className="row">
         <div className="col-sm-6 col-xs-12">
 
-          {props.cart.map((item) => <CartLineItem key={item.product.id} name={item.product.name} quantity={item.quantity} photo={item.product.butt} description={item.product.description} price={item.product.price} />)}
+          {props.cart.map((item) => <CartLineItem key={item.product.id} name={item.product.name} quantity={item.quantity} photo={item.product.photo} description={item.product.description} price={item.product.price} />)}
 
         </div>
       </div>

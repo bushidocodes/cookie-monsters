@@ -12,7 +12,9 @@ export default (props) => {
 		  <div className="panel-body">
 		    <div className="media">
 				  <div className="media-left">
-				    <a><img className="media-object" src={ props.photo } alt={ props.name }/></a>
+				  <div className="thumbContainer">
+				    <img className="thumbImg" src={ props.photo } alt={ props.name }/>
+				  </div>
 				  </div>
 				  <div className="media-body">
 				    <p>{ props.description }</p>
