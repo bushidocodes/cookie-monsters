@@ -5,7 +5,6 @@ import Cart from './Cart';
 import { Link } from 'react-router';
 
 export default (props) => {
-  console.log("Cart has props of: ", props);
   let numOfItems = 0;
   let total = 0;
   props.cart.forEach((cartLineItem) => {

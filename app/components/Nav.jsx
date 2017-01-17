@@ -33,6 +33,7 @@ export default (props) => (
                     }}>{props.auth.name}</a>!
                   </p>
                 </li>
+                <li><Link to="/myorders">My Orders</Link></li>
                 {props.auth.isAdmin ? (<li><Link to="/users">Users</Link></li>) : ''}
                 <li>
                   <a onClick={evt => {

@@ -22,7 +22,6 @@ export default ({ cookie, plusItemzToCart }) => (
           <a className="btn btn-info btn-sm" role="button" onClick={(evt) => {
             evt.preventDefault();
             let quantity = parseInt($(`#number_of_cookie_${cookie.id}`).val());
-            console.log("QUANTITY ", quantity);
             plusItemzToCart(cookie, quantity);
           } }>Add to cart</a>
         </p>

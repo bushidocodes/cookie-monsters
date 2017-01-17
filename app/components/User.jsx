@@ -8,7 +8,6 @@ export default (props) => {
   if (user === "") {
     browserHistory.push('/login');
   } else {
-    console.log('USER IS: ', props.user);
     return (
     <div className="container">
       <div className="col-xs-12 col-sm-4">

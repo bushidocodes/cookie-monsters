@@ -5,7 +5,6 @@ import CartLineItem from './CartLineItem';
 // Need to figure out how to access products added to the cart from the req.session
 
 export default (props) => {
-  console.log("My props are ", props.cart);
 
   return (
     <div className="container">

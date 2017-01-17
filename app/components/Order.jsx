@@ -6,7 +6,7 @@ import {Link} from 'react-router';
 export default () => (
   <div className="container">
     <div>
-      <Link to="/products"><img className="cookieMonsterImg" src='/images/cookie-monster.jpg' /></Link>
+      <img className="cookieMonsterImg" src='/images/cookie-monster.jpg' />
       <h1>Cookie Monsters</h1>
       <h3 className="subtitle">Home of the world's greatest cookies</h3>
     </div>

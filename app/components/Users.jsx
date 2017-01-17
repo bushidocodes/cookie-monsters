@@ -7,9 +7,6 @@ export default (props) => {
   let users = props.users.users;
   let selectedUser = props.users.selectedUser;
   let selectUser = props.selectUser;
-  console.log("USERS: ", users);
-  console.log("SELECTED USER: ", selectedUser);
-  console.log("SELECT USER: ", selectUser);
   return (
     <div className="container">
       <div className="col-xs-12 col-sm-4">
