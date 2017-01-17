@@ -111,9 +111,9 @@ module.exports = require('express').Router()
 	// Action: Retrieve a single order, including products and orderlineitem details
 	// Roles: Admin.
 	// Notes: Perhaps a user should be able to view this for their orders...
-	.get('/:orderId', mustBeLoggedIn, (req, res, next) => {
+	.get('/:id', mustBeLoggedIn, (req, res, next) => {
 		if (req.user.isAdmin) {
-			return Order.findById(req.params.orderId, {
+			return Order.findById(req.params.id, {
 				include: [{
 					model: Product,
 					through: {
@@ -130,9 +130,9 @@ module.exports = require('express').Router()
 
 	// Action: Update an order
 	// Roles: Admin.
-	.put('/:orderId', mustBeLoggedIn, (req, res, next) => {
+	.put('/:id', mustBeLoggedIn, (req, res, next) => {
 		if (req.user.isAdmin) {
-			return Order.findById(req.params.orderId)
+			return Order.findById(req.params.id)
 				.then(order => order.update(req.body))
 				.then(order => res.status(200).json(order))
 				.catch(next)
@@ -143,9 +143,9 @@ module.exports = require('express').Router()
 
 	// Action: Delete an order
 	// Roles: Admin.
-	.delete('/:orderId/', mustBeLoggedIn, (req, res, next) => {
+	.delete('/:id/', mustBeLoggedIn, (req, res, next) => {
 		if (req.user.isAdmin) {
-			return Order.findById(parseInt(req.params.orderId, 10))
+			return Order.findById(parseInt(req.params.id, 10))
 				.then(order => order.destroy())
 				.then(res.sendStatus(200))
 				.catch(next);
@@ -161,12 +161,12 @@ module.exports = require('express').Router()
 	// 	"2": {"quantity": 10},
 	//  	"10": {"quantity": 2}
 	// }}
-	.post('/:orderId/products/', mustBeLoggedIn, (req, res, next) => {
+	.post('/:id/products/', mustBeLoggedIn, (req, res, next) => {
 		if (req.user.isAdmin) {
 			let orderLineItems = req.body.orderLineItems;
 			let productIds = Object.keys(orderLineItems);
 			let order;
-			Order.findById(req.params.orderId)
+			Order.findById(req.params.id)
 				.then(_order => {
 					order = _order;
 					return Promise.all(productIds.map(productId => Product.findById(productId)))
@@ -205,7 +205,7 @@ module.exports = require('express').Router()
 function _promisifyOrderProps(orders) {
 	return orders.map(
 		({
-			orderID,
+			id,
 			status,
 			shippingRate,
 			shippingCarrier,
@@ -213,7 +213,7 @@ function _promisifyOrderProps(orders) {
 			created_at,
 			products,
 			total}) => Promise.props({
-				orderID,
+				id,
 				status,
 				shippingRate,
 				shippingCarrier,

@@ -51,7 +51,7 @@ describe('/api/orders/', () => {
       .expect(200)
       .then(res => {
         expect(res.body).to.have.lengthOf(1);
-        expect(res.body[0].orderID).to.equal(associatedOrder.orderID);
+        expect(res.body[0].id).to.equal(associatedOrder.id);
       })
     )
     after('logoff and destroy non-admin user', () => {
@@ -106,7 +106,7 @@ describe('/api/orders/', () => {
   })
   describe('POST / (as Non-Admin)', () => {
     const agent = request.agent(app)
-    let user, orderID;
+    let user, id;
     before('Create Non-Admin user and Login', () =>
       db.didSync
         .then(() =>
@@ -129,24 +129,24 @@ describe('/api/orders/', () => {
       .send({ "shippingCarrier": "UPS" })
       .expect(200)
       .then(res => {
-        orderID = res.body.orderID;
+        id = res.body.id;
         expect(res.body.shippingCarrier).to.equal('UPS');
-        expect(res.body).to.have.property('orderID');
+        expect(res.body).to.have.property('id');
         expect(res.body.user_id).to.equal(user.id);
       })
     )
     after('logoff, destroy posts, and destroy non-admin user', () => {
       agent.post('/logout');
       user.destroy();
-      if (orderID) {
-        Order.findById(orderID)
+      if (id) {
+        Order.findById(id)
           .then(order => order.destroy());
       }
     })
   })
   describe('POST / (as Admin)', () => {
     const agent = request.agent(app)
-    let user, orderID;
+    let user, id;
     before('Create Admin user and Login', () =>
       db.didSync
         .then(() =>
@@ -170,9 +170,9 @@ describe('/api/orders/', () => {
       .send({ "shippingCarrier": "USPS" })
       .expect(200)
       .then(res => {
-        orderID = res.body.orderID;
+        id = res.body.id;
         expect(res.body.shippingCarrier).to.equal('USPS');
-        expect(res.body).to.have.property('orderID');
+        expect(res.body).to.have.property('id');
         expect(res.body).to.have.property('user_id');
         expect(res.body.user_id).to.be.null;
       })
@@ -180,7 +180,7 @@ describe('/api/orders/', () => {
     after('logoff, destroy posts, and destroy admin user', () => {
       agent.post('/logout');
       user.destroy();
-      Order.findById(orderID)
+      Order.findById(id)
         .then(order => order.destroy());
     })
   })

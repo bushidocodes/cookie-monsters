@@ -9,7 +9,13 @@ module.exports = require('express').Router()
   // Roles: Guest, User, Admin
   .get('/', (req, res, next) =>
     Product.findAll()
-      .then(products => res.json(products))
+      .then(products => {
+        if (products.length > 0) {
+          res.json(products);
+        } else {
+          res.sendStatus(404);
+        }
+      })
       .catch(next))
 
   // Action: Create a new type of cookie
