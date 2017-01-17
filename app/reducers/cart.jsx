@@ -34,22 +34,27 @@ const reducer = (lineItems = [], action) => {
 
 	switch (action.type) {
 		case ADD_TO_CART:
+			console.log("Starting ADD_TO_CART");
 			// Clone lineItems to be a pure function
 			let newCart = [...lineItems];
 			// Create while loop to break when match is found
 			let index = 0;
-			let addedToExistingLineItem = false;
-			while (!addedToExistingLineItem && index < newCart.length) {
+			let foundMatchingItemInCart = false; // we are not sure yet
+			// so we search the items in the cart
+			while (!foundMatchingItemInCart && index < newCart.length) {
+				console.log("Inside of while loop");
 				// If we are adding quantity to an item already represented by a line item in the cart
 				if (newCart[index].product.id === action.lineItem.product.id) {
+					console.log("Start of match found");
 					// Update the quantity of the existing line item in the cart
 					newCart[index].quantity += action.lineItem.quantity;
-					addedToExistingLineItem = true;
+					foundMatchingItemInCart = true;
 					console.log("Appending quantity to existing cart line item");
 				}
+				index++;
 			}
 			// Otherwise add a new line item to the cart.
-			if (!addedToExistingLineItem) {
+			if (!foundMatchingItemInCart) {
 				newCart.push(action.lineItem);
 				console.log("Adding new line item to cart");
 			}
@@ -67,7 +72,7 @@ const reducer = (lineItems = [], action) => {
 				// Otherwise, just return the default params of lineItems
 				return lineItems;
 			}
-	}
+	} // state.cart
 };
 
 // Action Creator
