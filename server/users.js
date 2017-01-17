@@ -38,7 +38,7 @@ module.exports = require('express').Router()
 		User.findById(req.params.id)
 			.then(user => {
 				if (user) {
-					req.foundUser = user; //DO NOT KLOBBER PASSPORT BY USING REQ.USER!!!!
+					req.user = user;
 					next();
 				} else {
 					res.sendStatus(404);
@@ -51,19 +51,19 @@ module.exports = require('express').Router()
 	// Roles: User, Admin
 	// Notes:
 	.get('/:id', (req, res, next) =>
-		res.status(200).json(req.foundUser))
+		res.status(200).json(req.user))
 
 	// Action: Modify user by ID
 	// Roles: User, Admin
 	// Notes:
 	// TODO: Implement
 	// .put('/:id', (req, res, next) =>
-	// 	res.status(200).json(req.foundUser))
+	// 	res.status(200).json(req.user))
 
 	// Action: Delete user by ID
 	// Roles: User, Admin
 	// Notes:
 	// TODO: Implement delete
 	// .delete('/:id', (req, res, next) =>
-	// 	res.status(200).json(req.foundUser))
+	// 	res.status(200).json(req.user))
 
