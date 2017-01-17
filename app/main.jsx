@@ -14,6 +14,7 @@ import CartViewContainer from './containers/CartViewContainer';
 import LoginContainer from './containers/LoginContainer';
 import SignUp from './components/SignUp';
 import Order from './components/Order';
+import MyOrders from './components/MyOrders';
 import ProductsContainer from './containers/ProductsContainer';
 import UserContainer from './containers/UserContainer';
 import UsersContainer from './containers/UsersContainer';
@@ -62,6 +63,7 @@ render(
         <Route path="/login" component={LoginContainer} />
         <Route path="/users" component={UsersContainer} onEnter={onUsersEnter}/>
         <Route path="/user" component={UserContainer} />
+        <Route path="/myorders" component={MyOrders} />
         <IndexRedirect to="/products" />
       </Route>
     </Router>
