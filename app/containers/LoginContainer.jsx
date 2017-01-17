@@ -12,7 +12,6 @@ function mapDispatchToProps(dispatch) {
     login: (username, password) => {
       dispatch(login(username, password));
       browserHistory.push('/');
-
     }
   }
 }

@@ -46,4 +46,11 @@ export function receiveUsers() {
   }
 }
 
+export const updateProfile = (userId, username) =>
+  dispatch =>
+    axios.put(`/api/users/${userId}`,
+      { username })
+      .then((res) => dispatch(selectUser(res.data)))
+      .catch((err) => alert(err))
+
 export default reducer

@@ -1,5 +1,7 @@
 import User from '../components/User.jsx';
 import { connect } from 'react-redux';
+import {updateProfile} from '../reducers/users';
+import {browserHistory} from 'react-router';
 
 function mapStateToProps(state) {
   return {
@@ -8,16 +10,12 @@ function mapStateToProps(state) {
   }
 }
 
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     login: (username, password) => {
-//       dispatch(login(username, password));
-//       browserHistory.push('/');
+function mapDispatchToProps(dispatch) {
+  return {
+    updateProfile: (userId, username) => {
+      dispatch(updateProfile(userId, username));
+    }
+  }
+}
 
-//     }
-//   }
-// }
-
-
-
-export default connect(mapStateToProps)(User)
+export default connect(mapStateToProps, mapDispatchToProps)(User)

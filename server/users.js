@@ -57,8 +57,16 @@ module.exports = require('express').Router()
 	// Roles: User, Admin
 	// Notes:
 	// TODO: Implement
-	// .put('/:id', (req, res, next) =>
-	// 	res.status(200).json(req.user))
+	.put('/:id', (req, res, next) => { //selfOnlyOrAdmin,
+			User.update(
+				{name: req.body.username},
+				{where: {id: req.body.userId}}
+			)
+			.then(user => {
+				res.status(201).json(user)
+			})
+			.catch(next)
+	})
 
 	// Action: Delete user by ID
 	// Roles: User, Admin
