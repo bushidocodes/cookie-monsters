@@ -13,7 +13,7 @@ const appReducer = combineReducers({
 })
 
 const rootReducer = (state, action) => {
-  if (action.type === 'AUTHENTICATED' && action.user === '') {
+  if (action.type === 'WIPELOCALSTATE') {
     localStorage.clear();
     state.cart = [];
     state.users = initialUsersState;
