@@ -5,7 +5,7 @@ const GET_USERS = 'GET_USERS';
 const SELECT_USER = 'SELECT_USER';
 
 // Reducers
-const initialUsersState = {
+export const initialUsersState = {
   users: [],
   selectedUser: {}
 };
