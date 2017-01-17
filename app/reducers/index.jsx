@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+import { initialUsersState } from './users'
 
 // Implement Dan Abramov's suggested solution for reseting a redux store on logout
 // Added a localStorage.clear() to make sure that localStorage gets cleared out too
@@ -14,7 +15,8 @@ const appReducer = combineReducers({
 const rootReducer = (state, action) => {
   if (action.type === 'AUTHENTICATED' && action.user === '') {
     localStorage.clear();
-    state = undefined;
+    state.cart = [];
+    state.users = initialUsersState;
   }
   return appReducer(state, action)
 }
