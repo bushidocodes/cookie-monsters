@@ -13,6 +13,7 @@ import axios from 'axios';
 
 // Constant
 const ADD_TO_CART = 'ADD_TO_CART';
+const EMPTY_CART = 'EMPTY_CART';
 
 // Reducer
 const reducer = (lineItems = [], action) => {
@@ -47,6 +48,9 @@ const reducer = (lineItems = [], action) => {
       localStorage.setItem('cart', JSON.stringify(newCart))
       // And then return the new cart to redux
       return newCart;
+    case EMPTY_CART:
+      localStorage.removeItem('cart');
+      return [];
     default:
       // If the Redux store is empty, check to see if there is cart state frozen in localStorage under 'cart'
       let defrostedCart = localStorage.getItem('cart');
@@ -68,45 +72,10 @@ export function addToCart(product, quantity) {
   };
 }
 
-export function submitOrder(cart) {
-  [
-    {
-      product: {},
-      quantity: 1
-    }
-  ]
-
-  let orderLineItems = {};
-  cart.forEach(item => {
-    let itemObj = { quantity: item.quantity };
-    orderLineItems[item.product.id] = itemObj;
-  })
-  let order = {
-    shippingCarrier: 'UPS',
-    orderLineItems: orderLineItems
-  }
-  let data = JSON.stringify(order)
-  console.log(data);
-  return function (dispatch) {
-    axios.post('/api/orders/', order)
-      .then((order) => alert('', order))
-      .catch((err) => alert(err))
-  }
+export function emptyCart(){
+  return {
+    type: EMPTY_CART
+  };
 }
-
-export function retrieveOrders() {
-  
-
-}
-
-// props.cart[0].productId
-// props.cart[0].quantity
-// Dispatch
-// addItemToCart
-// modifyCountOfItem
-// removeItemFromCart
-// checkout
-
-
 
 export default reducer;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import CartView from '../components/CartView';
-import { submitOrder } from '../reducers/cart.jsx'
+import { submitOrder } from '../reducers/orders.jsx'
 
 function mapStateToProps(state) {
   return {

@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { emptyCart } from './cart';
+import { browserHistory } from 'react-router';
 
 // Constants
 const GET_ORDERS = 'GET_ORDERS';
@@ -42,6 +44,36 @@ export function receiveOrders() {
   return function (dispatch) {
     axios.get('/api/orders/')
       .then((res) => dispatch(getOrders(res.data)))
+      .catch((err) => alert(err))
+  }
+}
+
+export function submitOrder(cart) {
+  [
+    {
+      product: {},
+      quantity: 1
+    }
+  ]
+
+  let orderLineItems = {};
+  cart.forEach(item => {
+    let itemObj = { quantity: item.quantity };
+    orderLineItems[item.product.id] = itemObj;
+  })
+  let order = {
+    shippingCarrier: 'UPS',
+    orderLineItems: orderLineItems
+  }
+  let data = JSON.stringify(order)
+  console.log(data);
+  return function (dispatch) {
+    axios.post('/api/orders/', order)
+      .then((order) => {
+        alert('Cookies are on the way!');
+        dispatch(emptyCart());
+        browserHistory.push('/products');
+      })
       .catch((err) => alert(err))
   }
 }
