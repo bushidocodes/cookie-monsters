@@ -12,6 +12,7 @@ export default function (props) {
       <div id="cartRow" className="col-sm-6 col-xs-12">
         <Cart />
       </div>
+      <br/>
     </div>
   )
 }

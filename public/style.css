@@ -51,6 +51,22 @@ a:hover {
   width: 100%;
 }
 
+/*CartView*/
+#cart-view {
+  margin: auto;
+}
+
+/*CartEmpty*/
+#cart-empty-container {
+  padding-top: 60px;
+  width: 80%;
+}
+
+/*CartLineItem*/
+/*#cart-line-item {
+  width: 100%;
+}*/
+
 /*Product Grid*/
 
 .cookieContainer {
