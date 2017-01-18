@@ -12,9 +12,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     submitOrder: (cart) => {
-      console.log("dude");
       dispatch(submitOrder(cart));
-      // browserHistory.push('/');
     }
   }
 }

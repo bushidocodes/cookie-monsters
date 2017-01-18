@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+// Example order object
 // "order": {
 // 	"status": "cancelled",
 //   "shippingRate": 9.99,

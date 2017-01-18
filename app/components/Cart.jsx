@@ -16,16 +16,11 @@ export default (props) => {
       <p id="cartPreviewText">
         <i id="cartPreviewIcon" className="fa fa-shopping-cart"></i>
         <span> {numOfItems}</span> items totaling <span>${(total).toFixed(2)} </span>
-
-
-        { 
-          window.location.pathname === "/viewcart" ? 
-          <Link className="btn btn-warning btn-sm" to="/products">Go Back</Link> : 
+        {
+          window.location.pathname === "/viewcart" ?
+          <Link className="btn btn-warning btn-sm" to="/products">Buy more</Link> :
           <Link className="btn btn-success btn-sm" to="/viewcart">View Cart</Link>
         }
-
-
-        
       </p>
     </div>
   )
