@@ -163,6 +163,19 @@ body {
   font-weight: 600;
 }
 
+.table-borderless tbody tr td,
+.table-borderless thead tr td,
+.table-borderless tfoot tr th,
+.table-borderless tfoot tr td {
+    border: none;
+}
+
+/*My Orders*/
+#no-orders {
+  width: 38%;
+  margin-top: 15px;
+}
+
 /*Reviews*/
 
 #reviews {

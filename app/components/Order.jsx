@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 
 export default (props) => {
-  console.log("Order props are: ", props);
   return (
     <div className="container">
       <div>
@@ -13,8 +12,8 @@ export default (props) => {
         <h3 className="subtitle">Home of the world's greatest cookies</h3>
       </div>
       <div id="orderDetail">
-        <p className="lead">Cookie Order</p>
-        <table className="table table-responsive">
+        <p className="lead">Cookie Order {props.order.id}</p>
+        <table className="table table-responsive table-borderless">
           <thead>
             <tr>
               <th>Quantity</th>
@@ -51,11 +50,8 @@ export default (props) => {
         </table>
         {/* This should appear after order is submitted */}
         <div className="lead">
-          Products shipped by <span id="shippingCarrier">{props.order.shippingCarrier}</span>. Receipt and tracking number emailed to you shortly.
+          Cookies shipped by <span id="shippingCarrier">{props.order.shippingCarrier}</span>.
       </div>
-        <div>
-          <Link to="/products">Return to main page</Link>
-        </div>
       </div>
     </div>
   )

@@ -16,7 +16,6 @@ export default () => (
         <div className="cookieContainer">
           <img className="cookieImage" src="/images/cookies/chocolate-chip.jpg" />
         </div>
-        <Link to="/products">Return to main page</Link>
       </div>
       <div className="col-xs-12 col-sm-6 col-md-8">
         {/* REVIEW PRODUCT NAME */}

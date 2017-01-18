@@ -72,7 +72,7 @@ export function submitOrder(cart) {
       .then((order) => {
         alert('Cookies are on the way!');
         dispatch(emptyCart());
-        browserHistory.push('/products');
+        browserHistory.push('/myOrders');
       })
       .catch((err) => alert(err))
   }
