@@ -14,7 +14,7 @@ import AppContainer from './containers/AppContainer';
 import CartViewContainer from './containers/CartViewContainer';
 import LoginContainer from './containers/LoginContainer';
 import SignUp from './components/SignUp';
-import Order from './components/Order';
+import Order from './containers/OrderContainer';
 import MyOrders from './containers/MyOrdersContainer';
 import ProductsContainer from './containers/ProductsContainer';
 import UserContainer from './containers/UserContainer';

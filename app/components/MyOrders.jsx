@@ -9,7 +9,7 @@ export default (props) => {
       <h1 className="display-4">My Orders</h1>
       {/* Loop over orders */}
       <div>
-        {props.orders.map(order => <MyOrdersItem order={order} selectOrder={props.selectOrder}/>)}
+        {props.orders.map(order => <MyOrdersItem key={order.id} order={order} selectOrder={props.selectOrder}/>)}
       </div>
     </div>
   )
