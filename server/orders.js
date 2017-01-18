@@ -79,6 +79,7 @@ module.exports = require('express').Router()
 
 		// if the user is an admin
 		if (req.user && req.user.isAdmin) {
+			console.log("User is an admin");
 			// ...and the admin specifies a userID for whom to create an order
 			if (req.param && req.param.userId) {
 				console.log("User ", req.param.userId, " specified as param");
@@ -135,6 +136,7 @@ module.exports = require('express').Router()
 		}
 		// ... and the user is not an admin
 		else if (req.user) {
+			console.log('user is not an admin');
 			req.user.createOrder(req.body)
 				.then(_order => {
 					order = _order;
@@ -161,6 +163,7 @@ module.exports = require('express').Router()
 					}]
 				}))
 				.then(order => {
+					console.log(order);
 					return res.status(200).json(order)
 				})
 				.catch(next)

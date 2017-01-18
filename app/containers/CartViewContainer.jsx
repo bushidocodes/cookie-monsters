@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import CartView from '../components/CartView';
+import { submitOrder } from '../reducers/cart.jsx'
 
 function mapStateToProps(state) {
   return {
@@ -8,4 +9,15 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(CartView);
+function mapDispatchToProps(dispatch) {
+  return {
+    submitOrder: (cart) => {
+      console.log("dude");
+      dispatch(submitOrder(cart));
+      // browserHistory.push('/');
+    }
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(CartView);

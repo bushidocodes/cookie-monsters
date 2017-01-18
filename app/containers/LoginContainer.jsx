@@ -3,10 +3,6 @@ import {login} from '../reducers/auth';
 import {connect} from 'react-redux';
 import {browserHistory} from 'react-router';
 
-function mapStateToProps(state) {
-  return {}
-}
-
 function mapDispatchToProps(dispatch) {
   return {
     login: (username, password) => {
@@ -17,6 +13,6 @@ function mapDispatchToProps(dispatch) {
   }
 }
 export default connect (
-  state => mapStateToProps,
+  null,
   mapDispatchToProps,
 ) (Login)

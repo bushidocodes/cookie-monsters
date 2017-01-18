@@ -18,7 +18,12 @@ export default (props) => {
             price={ item.product.price } />) }
         </div>
       </div>
-      { props.cart.length > 0 ? <div className="text-center"><button className="btn btn-success btn-lg">Checkout</button></div> : '' }
+      { props.cart.length > 0 ? <div className="text-center"><button onClick={
+        (evt) => {
+          evt.preventDefault();
+          props.submitOrder(props.cart);
+        }
+      } className="btn btn-success btn-lg">Checkout</button></div> : '' }
       <br/>
     </div>
   );

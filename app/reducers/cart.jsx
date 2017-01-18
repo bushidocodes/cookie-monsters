@@ -45,7 +45,7 @@ const reducer = (lineItems = [], action) => {
       }
       // And then save the cart as a string to localstorage under the key cart
       localStorage.setItem('cart', JSON.stringify(newCart))
-        // And then return the new cart to redux
+      // And then return the new cart to redux
       return newCart;
     default:
       // If the Redux store is empty, check to see if there is cart state frozen in localStorage under 'cart'
@@ -68,18 +68,40 @@ export function addToCart(product, quantity) {
   };
 }
 
+export function submitOrder(cart) {
+  [
+    {
+      product: {},
+      quantity: 1
+    }
+  ]
+
+  let orderLineItems = {};
+  cart.forEach(item => {
+    let itemObj = { quantity: item.quantity };
+    orderLineItems[item.product.id] = itemObj;
+  })
+  let order = {
+    shippingCarrier: 'UPS',
+    orderLineItems: orderLineItems
+  }
+  let data = JSON.stringify(order)
+  console.log(data);
+  return function (dispatch) {
+    axios.post('/api/orders/', order)
+      .then((order) => alert('',order))
+      .catch((err) => alert(err))
+  }
+}
+
 // props.cart[0].productId
 // props.cart[0].quantity
-
 // Dispatch
-
 // addItemToCart
-
 // modifyCountOfItem
-
 // removeItemFromCart
-
-
 // checkout
+
+
 
 export default reducer;
