@@ -89,9 +89,14 @@ export function submitOrder(cart) {
   console.log(data);
   return function (dispatch) {
     axios.post('/api/orders/', order)
-      .then((order) => alert('',order))
+      .then((order) => alert('', order))
       .catch((err) => alert(err))
   }
+}
+
+export function retrieveOrders() {
+  
+
 }
 
 // props.cart[0].productId

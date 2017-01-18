@@ -7,6 +7,7 @@ import axios from 'axios';
 import { receiveProducts } from './reducers/products';
 // TODO: Make sure that this func acts similarly to receiveProducts
 import { receiveUsers } from './reducers/users';
+import { receiveOrders } from './reducers/orders';
 import store from './store';
 
 import AppContainer from './containers/AppContainer';
@@ -14,7 +15,7 @@ import CartViewContainer from './containers/CartViewContainer';
 import LoginContainer from './containers/LoginContainer';
 import SignUp from './components/SignUp';
 import Order from './components/Order';
-import MyOrders from './components/MyOrders';
+import MyOrders from './containers/MyOrdersContainer';
 import ProductsContainer from './containers/ProductsContainer';
 import UserContainer from './containers/UserContainer';
 import UsersContainer from './containers/UsersContainer';
@@ -51,6 +52,10 @@ const onUsersEnter = function () {
   store.dispatch(receiveUsers());
 };
 
+const onOrdersEnter = function () {
+  store.dispatch(receiveOrders());
+};
+
 render(
   <Provider store={store}>
     <Router history={browserHistory}>
@@ -63,7 +68,7 @@ render(
         <Route path="/login" component={LoginContainer} />
         <Route path="/users" component={UsersContainer} onEnter={onUsersEnter}/>
         <Route path="/user" component={UserContainer} />
-        <Route path="/myorders" component={MyOrders} />
+        <Route path="/myorders" component={MyOrders} onEnter={onOrdersEnter}/>
         <IndexRedirect to="/products" />
       </Route>
     </Router>

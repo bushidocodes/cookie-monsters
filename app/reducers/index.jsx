@@ -9,7 +9,8 @@ const appReducer = combineReducers({
   auth: require('./auth').default,
   products: require('./products').default,
   cart: require('./cart').default,
-  users: require('./users').default
+  users: require('./users').default,
+  orders: require('./orders').default
 })
 
 const rootReducer = (state, action) => {
