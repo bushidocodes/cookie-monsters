@@ -138,33 +138,17 @@ module.exports = require('express').Router()
 			req.user.createOrder(req.body)
 				.then(_order => {
 					order = _order;
-					console.log(productIds);
-					console.log(productIds[0]);
-					// console.log("TEST: ", Product.findById(1));
-					Product.findById(2).then(product => console.log("Find 2", product));
-					Product.findById(productIds[0]).then(product => console.log(product));
-					// return productIds.map(productId => Product.findById(productId));
+					return Promise.all(productIds.map(productId => Product.findById(productId)))
 				})
-				// .then(products => Promise.all(products))
-					// return Promise.all()
-					// console.log("productIds: ", productIds);
-					// return Promise.all(
-					// 	productIds.map(productId => {
-					// 		let intId = parseInt(productId, 10);
-					// 		console.log(intId);
-					// 		console.log(Product.findById(intId));
-					// 		return Product.findById(intId);
-					// 	})
-					// ) //parseint IS NEEDED HERE
-				// })
 				.then(products => {
-					console.log("Products is: ", products);
 					if (products) {
-						products.forEach((product) =>
-							order.addProduct(product, {
-								quantity: orderLineItems[product.id].quantity,
-								price: product.price
-							})
+						return Promise.all(
+							products.map((product) =>
+								order.addProduct(product, {
+									quantity: orderLineItems[product.id].quantity,
+									price: product.price
+								})
+							)
 						)
 					}
 				})

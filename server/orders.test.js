@@ -128,11 +128,10 @@ describe('/api/orders/', () => {
       .send({
         "status": "cancelled",
         "shippingRate": 9.99,
-        "shippingCarrier": null,
+        "shippingCarrier": 'UPS',
         "trackingNumber": null,
         "orderLineItems": {
-          "2": { "quantity": 1 },
-          "10": { "quantity": 20 }
+          "1": { "quantity": 10 }
         }
       })
       .expect(200)
