@@ -23,7 +23,6 @@ export default ({ cookie, plusItemzToCart }) => (
             evt.preventDefault();
             let quantity = parseInt($(`#number_of_cookie_${cookie.id}`).val());
             plusItemzToCart(cookie, quantity);
-            $('#quantityText').remove();
           } }>Add to cart</a>
         </p>
       </div>
