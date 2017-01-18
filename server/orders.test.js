@@ -50,6 +50,7 @@ describe('/api/orders/', () => {
       .get('/api/orders/')
       .expect(200)
       .then(res => {
+        console.log("RES BODY: ", res.body);
         expect(res.body).to.have.lengthOf(1);
         expect(res.body[0].id).to.equal(associatedOrder.id);
       })
@@ -85,14 +86,12 @@ describe('/api/orders/', () => {
         .then(res => Order.create())
         .then(_order => order = _order)
     )
-    xit('returns all orders if admin', () => agent
+    it('returns other user\'s orders if admin', () => agent
       .get('/api/orders/')
       .expect(200)
-      .then(res => expect(res.body).to.include(order))
-      // TODO: Figure out how to make this test work.
-      // I want to check to make sure that res.body
-      // contains an order that has the same id as the
-      // order stored in the order variable...
+      .then(res => {
+        expect(res.body[0].id).to.equal(order.id)
+      })
     )
     after('logoff and destroy non-admin user', () => {
       user.destroy();
@@ -126,9 +125,19 @@ describe('/api/orders/', () => {
     )
     it('adds an order associated with the current logged in user', () => agent
       .post('/api/orders/')
-      .send({ "shippingCarrier": "UPS" })
+      .send({
+        "status": "cancelled",
+        "shippingRate": 9.99,
+        "shippingCarrier": null,
+        "trackingNumber": null,
+        "orderLineItems": {
+          "2": { "quantity": 1 },
+          "10": { "quantity": 20 }
+        }
+      })
       .expect(200)
       .then(res => {
+        console.log("==================RES: ", res.body);
         id = res.body.id;
         expect(res.body.shippingCarrier).to.equal('UPS');
         expect(res.body).to.have.property('id');
