@@ -5,14 +5,17 @@ const Order = require('../db/models/order')
 const Product = require('../db/models/product')
 const User = require('../db/models/user')
 const Promise = require('bluebird');
-const {mustBeLoggedIn, forbidden} = require('./auth.filters');
+const {mustBeLoggedIn, selfOnly, forbidden} = require('./auth.filters.js');
 
 module.exports = require('express').Router()
 
 	// Action: Retrieve all orders, including products and orderlineitem details
 	// Roles: Admin
-	.get('/', mustBeLoggedIn, (req, res, next) => {
-		if (req.user.isAdmin) {
+	.get('/', (req, res, next) => {
+		console.log("get /api/orders/");
+		// .get('/', mustBeLoggedIn, (req, res, next) => {
+		if (req.user && req.user.isAdmin) {
+			console.log("is an admin");
 			return Order.findAll({
 				include: [{
 					model: Product,
@@ -25,7 +28,10 @@ module.exports = require('express').Router()
 				.then(orders => Promise.all(orders))
 				.then(orders => res.json(orders))
 				.catch(next)
-		} else {
+		}
+		// If not an admin, retrieve your own orders
+		else if (req.user) {
+			console.log("else if req.user");
 			req.user.getOrders({
 				include: [{
 					model: Product,
@@ -38,6 +44,22 @@ module.exports = require('express').Router()
 				.then(orders => Promise.all(orders))
 				.then(orders => res.status(200).json(orders))
 				.catch(next)
+		} else {
+			// TEMP to test
+			return Order.findAll({
+				include: [{
+					model: Product,
+					through: {
+						attributes: ['quantity', 'price']
+					}
+				}]
+			})
+				.then(orders => _promisifyOrderProps(orders))
+				.then(orders => Promise.all(orders))
+				.then(orders => res.json(orders))
+				.catch(next)
+			// res.status(403).send("Cannot view without req.user");
+
 		}
 	})
 
@@ -48,36 +70,122 @@ module.exports = require('express').Router()
 	//   guest, they create an order unassociated with
 	//   any single user
 	//   User has actually ordered.
+
 	.post('/:userId?', (req, res, next) => {
-		if (req.user.isAdmin) {
-			if (req.param.userId) {
+		let order;
+		let orderLineItems = (req.body && req.body.orderLineItems) ? req.body.orderLineItems : null;
+		let productIds = (orderLineItems) ? Object.keys(orderLineItems) : [];
+		console.log("-------------------", req.param.userId);
+
+		// if the user is an admin
+		if (req.user && req.user.isAdmin) {
+			// ...and the admin specifies a userID for whom to create an order
+			if (req.param && req.param.userId) {
+				console.log("User ", req.param.userId, " specified as param");
 				User.findById(req.param.userId)
-					.then(user => user.create(req.body))
-					.then(order => res.status(200).json(order))
-					.catch(next)
-			} else {
-				Order.create(req.body)
-					.then(order => res.status(200).json(order))
+					.then(user => user.createOrder(req.body)) // filter out only the Order attributes???
+					.then(_order => {
+						order = _order;
+						return Promise.all(productIds.map(productId => Product.findById(productId)))
+					})
+					.then(products => {
+						if (products) {
+							products.forEach((product) =>
+								order.addProduct(product, {
+									quantity: orderLineItems[product.id].quantity,
+									price: product.price
+								})
+							)
+						}
+					})
+					.then(res.sendStatus(200))
 					.catch(next)
 			}
-		} else { //Just assuming user and ignoring guests for now. See TODO below.
+			// ... and the user does not specify a userID
+			else {
+				console.log("No user specified as param");
+				Order.create(req.body)
+					.then(_order => {
+						order = _order;
+						return Promise.all(productIds.map(productId => Product.findById(productId)))
+					})
+					.then(products => {
+						if (products) {
+							products.forEach((product) =>
+								order.addProduct(product, {
+									quantity: orderLineItems[product.id].quantity,
+									price: product.price
+								})
+							)
+						}
+					})
+					.then(() => Order.findById(order.id, {
+						include: [{
+							model: Product,
+							through: {
+								attributes: ['quantity', 'price']
+							}
+						}]
+					}))
+					.then(order => {
+						return res.status(200).json(order)
+					})
+					.catch(next)
+			}
+		}
+		// ... and the user is not an admin
+		else if (req.user) {
 			req.user.createOrder(req.body)
-				.then(order => res.status(200).json(order))
+				.then(_order => {
+					order = _order;
+					return Promise.all(productIds.map(productId => Product.findById(productId)))
+				})
+				.then(products => {
+					if (products) {
+						return Promise.all(
+							products.map((product) =>
+								order.addProduct(product, {
+									quantity: orderLineItems[product.id].quantity,
+									price: product.price
+								})
+							)
+						)
+					}
+				})
+				.then(() => Order.findById(order.id, {
+					include: [{
+						model: Product,
+						through: {
+							attributes: ['quantity', 'price']
+						}
+					}]
+				}))
+				.then(order => {
+					return res.status(200).json(order)
+				})
 				.catch(next)
 		}
-		// TODO: I am unclear how req-user.role works. I need to know this to understand how to differentiate
-		//   between guests and users
-		// else if (req.user.role === 'auth') {
-		// 	console.log("Auth");
-		// 	req.user.createOrder(req.body)
-		// 		.then(order => res.status(200).json(order))
-		// 		.catch(next)
-		// } else { // guest checkout
-		// 	console.log("Not Auth. req.user is :", req.user);
-		// 	Order.create(req.body)
-		// 		.then(order => res.status(200).json(order))
-		// 		.catch(next)
-		// }
+		// Guest User
+		else {
+			console.log("No user logged in so guest");
+			Order.create(req.body)
+				.then(_order => {
+					order = _order;
+					return Promise.all(productIds.map(productId => Product.findById(productId)))
+				})
+				.then(products => {
+					if (products) {
+						products.forEach((product) =>
+							order.addProduct(product, {
+								quantity: orderLineItems[product.id].quantity,
+								price: product.price
+							})
+						)
+					}
+				})
+				.then(res.sendStatus(200))
+				.catch(next)
+		}
 	})
 
 	// TODO: Enhance to be able to create items at the same time once
