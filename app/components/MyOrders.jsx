@@ -22,6 +22,7 @@ export default (props) => {
         ) : ''}
       <div>
         {/* Loop over orders */}
+        {/* Ideally would sort these with most recent order first */}
         {props.orders.map(order => <MyOrdersItem key={order.id} order={order} selectOrder={props.selectOrder}/>)}
       </div>
     </div>
