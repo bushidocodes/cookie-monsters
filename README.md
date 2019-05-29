@@ -6,10 +6,11 @@ See me live at https://cookie-monsters.herokuapp.com/
 
 ![Dancing Cookie Monster](https://media.giphy.com/media/RVuNZB864BeVy/giphy.gif)
 
-Cookie Monsters is the ultimate e-Commerce platform for lovers of cookies. Originally built as a senior phase project by Fullstack Academy's greatest trio of students, it has risen in prominance and now haunts public health professionals with nightmares of creeping obesity and diabetes. 
+Cookie Monsters is the ultimate e-Commerce platform for lovers of cookies. Originally built as a senior phase project by Fullstack Academy's greatest trio of students, it has risen in prominence and now haunts public health professionals with nightmares of creeping obesity and diabetes. 
 
 ## Project Setup
 TODO
+
 ## Built with love using
 * Node.js
 * Postgres
